@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Smartphone } from "lucide-react";
-import Logo from "@/assets/logo.png";
+import Logo from "@/assets/logo-color.png";
+import LogoText from "@/assets/logo.png";
 import LogoIcon from "@/assets/logo-image.png";
 
 const HeroSection = () => {
@@ -19,6 +20,11 @@ const HeroSection = () => {
         <div className="text-center lg:text-left animate-fade-in">
           <div className="flex gap-2 mb-6">
             <img src={Logo} alt="Daily Foods Logo" className="w-auto h-10" />
+            <img
+              src={LogoText}
+              alt="Daily Foods Logo"
+              className="w-auto h-10"
+            />
             {/* <span className="text-orange-600 font-semibold text-lg">
               Daily Foods
             </span> */}

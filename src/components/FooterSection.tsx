@@ -1,12 +1,24 @@
 import { Button } from "@/components/ui/button";
-import { Instagram, Twitter, Facebook, Smartphone } from "lucide-react";
+import { Instagram, Music2, Facebook, Smartphone } from "lucide-react";
 import Logo from "@/assets/logo-footer.png";
 
 const FooterSection = () => {
   const socialLinks = [
-    { icon: Instagram, href: "#", color: "hover:text-pink-500" },
-    { icon: Twitter, href: "#", color: "hover:text-blue-400" },
-    { icon: Facebook, href: "#", color: "hover:text-blue-600" },
+    {
+      icon: Instagram,
+      href: "https://www.instagram.com/dailyfoodapp",
+      color: "hover:text-pink-500",
+    },
+    {
+      icon: Music2,
+      href: "https://www.tiktok.com/@dailyfoodapp",
+      color: "hover:text-black",
+    },
+    {
+      icon: Facebook,
+      href: "https://www.facebook.com/dailyfoodapp",
+      color: "hover:text-blue-600",
+    },
   ];
 
   return (
@@ -40,6 +52,7 @@ const FooterSection = () => {
                   key={index}
                   variant="ghost"
                   size="icon"
+                  onClick={() => window.open(social.href, "_blank")}
                   className={`w-12 h-12 rounded-full bg-gray-800 hover:bg-gray-700 ${social.color} transition-all duration-300 transform hover:scale-110`}
                 >
                   <social.icon className="w-5 h-5" />
