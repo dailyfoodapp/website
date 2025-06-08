@@ -171,7 +171,7 @@ const FeaturesSection = () => {
 
           {/* Main Content */}
           <div className="relative z-10">
-            <h1 className="text-5xl lg:text-7xl font-extrabold text-gray-900 mb-6 leading-tight">
+            <h1 className="text-4xl lg:text-7xl font-extrabold text-gray-900 mb-6 leading-tight">
               <span
                 className={`typewriter-base ${
                   isVisible ? "typewriter-line-1-active" : "typewriter-line-1"
@@ -187,7 +187,7 @@ const FeaturesSection = () => {
                 Offers more than
               </span>
               <span
-                className={`typewriter-base text-4xl lg:text-5xl font-semibold text-gray-600 mt-4 ${
+                className={`typewriter-base text-3xl lg:text-5xl font-semibold text-gray-600 mt-4 ${
                   isVisible ? "typewriter-line-3-active" : "typewriter-line-3"
                 }`}
               >
@@ -372,10 +372,10 @@ const FeaturesSection = () => {
         </div>
 
         {/* Who Are We Section */}
-        <div className="mt-24 bg-gradient-to-br from-gray-50 to-orange-50 rounded-3xl p-12 animate-fade-in">
+        <div className="mt-24 bg-gradient-to-br from-gray-50 to-orange-50 rounded-3xl p-5 lg:p-12 animate-fade-in">
           <div className="grid md:grid-cols-2 gap-12">
             {/* Who We Are */}
-            <div className="group bg-white p-10 rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 animate-fade-in border border-gray-100 hover:border-blue-200">
+            <div className="group bg-white p-5 lg:p-10 rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 animate-fade-in border border-gray-100 hover:border-blue-200">
               <div className="flex items-center mb-6">
                 <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-400 to-purple-500 p-4 group-hover:scale-110 transition-transform duration-300 shadow-lg mr-4">
                   <Users className="w-full h-full text-white" />
@@ -410,7 +410,7 @@ const FeaturesSection = () => {
 
             {/* Our Mission */}
             <div
-              className="group bg-white p-10 rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 animate-fade-in border border-gray-100 hover:border-orange-200"
+              className="group bg-white p-5 lg:p-10 rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 animate-fade-in border border-gray-100 hover:border-orange-200"
               style={{ animationDelay: "200ms" }}
             >
               <div className="flex items-center mb-6">
