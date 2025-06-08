@@ -28,7 +28,10 @@ const SignupSection = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-orange-100 via-red-50 to-yellow-100 relative overflow-hidden">
+    <section
+      id="signup-form"
+      className="py-20 bg-gradient-to-br from-orange-100 via-red-50 to-yellow-100 relative overflow-hidden"
+    >
       {/* Background animations */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-10 left-1/4 w-32 h-32 bg-orange-200 rounded-full animate-pulse opacity-30"></div>
@@ -44,7 +47,7 @@ const SignupSection = () => {
             <span className="font-semibold">Join the Waitlist</span>
           </div>
 
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-4xl lg:text-4xl font-bold text-gray-900 mb-6">
             Be Among the First to
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500">
               {" "}

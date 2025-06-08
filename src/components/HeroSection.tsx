@@ -5,6 +5,26 @@ import LogoText from "@/assets/logo.png";
 import LogoIcon from "@/assets/logo-image.png";
 
 const HeroSection = () => {
+  const scrollToSignup = () => {
+    const signupSection = document.getElementById("signup-form");
+    if (signupSection) {
+      signupSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
+  const scrollToHowItWorks = () => {
+    const howItWorksSection = document.getElementById("how-it-works");
+    if (howItWorksSection) {
+      howItWorksSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
   return (
     <section className="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50 flex items-center justify-center px-4 py-12 relative overflow-hidden">
       {/* Animated background elements */}
@@ -30,25 +50,28 @@ const HeroSection = () => {
             </span> */}
           </div>
 
-          <h1 className="text-5xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
-            Delicious Food
-            <br />
+          <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+            No food for a lazy man is a pure{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-red-500 to-yellow-500 animate-pulse">
-              Coming Soon
+              bunkum
             </span>
           </h1>
 
           <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-            Get ready for the ultimate food delivery experience. Fresh
-            ingredients, amazing flavors, and lightning-fast delivery right to
-            your doorstep.
+            Get ready for the ultimate savings on foods and groceries. You don't
+            have to spend your arms and legs to feed anymore. Save more than 60%
+            on food and grocery shopping with our innovative food service.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-            <Button className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-6 rounded-full text-lg font-semibold transform hover:scale-105 transition-all duration-300 shadow-lg">
+            <Button
+              onClick={scrollToSignup}
+              className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-6 rounded-full text-lg font-semibold transform hover:scale-105 transition-all duration-300 shadow-lg"
+            >
               Notify Me
             </Button>
             <Button
+              onClick={scrollToHowItWorks}
               variant="outline"
               className="border-2 border-orange-500 text-orange-600 hover:bg-orange-50 px-8 py-6 rounded-full text-lg font-semibold transform hover:scale-105 transition-all duration-300"
             >

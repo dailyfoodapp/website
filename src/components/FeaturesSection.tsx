@@ -65,7 +65,7 @@ const FeaturesSection = () => {
       icon: PiggyBank,
       title: "Save with Asusu",
       description:
-        "Automate contributions to a savings group and redeem funds for food and essentials.",
+        "Automate contributions to a savings plan and redeem funds for food and essentials.",
       color: "from-green-400 to-blue-500",
     },
   ];
@@ -75,7 +75,7 @@ const FeaturesSection = () => {
       icon: Zap,
       title: "Daily Food Subscription",
       description:
-        "Breakfast, lunch, and dinner options delivered hot from trusted restaurants or kitchens with flexible weekly or monthly plans.",
+        "Save more with foods and groceries. Get fresh ingredients and meals delivered to your doorstep.",
       color: "from-orange-400 to-red-500",
     },
     {
@@ -87,9 +87,9 @@ const FeaturesSection = () => {
     },
     {
       icon: PiggyBank,
-      title: "Asusu (Savings) Groups",
+      title: "Asusu (Savings) Plans",
       description:
-        "Create or join a savings group with weekly/monthly auto-contributions. Use funds for food subscriptions or withdraw.",
+        "Create or join a savings plan with weekly/monthly auto-contributions. Use funds for food subscriptions or withdraw.",
       color: "from-green-400 to-teal-500",
     },
     {
@@ -110,8 +110,15 @@ const FeaturesSection = () => {
       icon: Brain,
       title: "AI Food Recommendations",
       description:
-        "Get personalized food recommendations based on your preferences and dietary restrictions.",
+        "Get food recipes and meal plans based on your preferences and dietary restrictions.",
       color: "from-green-400 to-teal-500",
+    },
+    {
+      icon: PiggyBank,
+      title: "Food Financing",
+      description:
+        "Flexible payment plans and micro-loans for food purchases. Making quality nutrition accessible to everyone. (Coming in a future version)",
+      color: "from-purple-400 to-indigo-500",
     },
   ];
 
@@ -170,28 +177,28 @@ const FeaturesSection = () => {
                   isVisible ? "typewriter-line-1-active" : "typewriter-line-1"
                 }`}
               >
-                Food Made
+                Daily Foods App
               </span>
               <span
                 className={`typewriter-base text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 ${
                   isVisible ? "typewriter-line-2-active" : "typewriter-line-2"
                 }`}
               >
-                Simple
+                Offers more than
               </span>
               <span
                 className={`typewriter-base text-4xl lg:text-5xl font-semibold text-gray-600 mt-4 ${
                   isVisible ? "typewriter-line-3-active" : "typewriter-line-3"
                 }`}
               >
-                Life Made Better
+                just food services
               </span>
             </h1>
           </div>
         </div>
 
         {/* How It Works Section */}
-        <div className="text-center mb-16 animate-fade-in">
+        <div id="how-it-works" className="text-center mb-16 animate-fade-in">
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
             How It
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500">
@@ -313,7 +320,7 @@ const FeaturesSection = () => {
                 <UsersRound className="w-full h-full text-white" />
               </div>
               <h3 className="font-bold text-lg mb-2 group-hover:text-purple-600 transition-colors duration-300">
-                Community Groups
+                Community Savers
               </h3>
               <p className="text-gray-600">Save together via Asusu</p>
             </div>
@@ -381,9 +388,9 @@ const FeaturesSection = () => {
               <div className="space-y-4">
                 <p className="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
                   We're a passionate team of food enthusiasts, tech innovators,
-                  and community builders from across Nigeria. Born from our own
-                  struggles with meal planning, grocery shopping, and saving for
-                  better nutrition.
+                  and community builders from across Nigeria. Born out of our
+                  own struggles with spending more than 70% of our earnings on
+                  food, meal planning.
                 </p>
                 <p className="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
                   Our diverse backgrounds in technology, food service, and
@@ -417,9 +424,10 @@ const FeaturesSection = () => {
 
               <div className="space-y-4">
                 <p className="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
-                  To make nutritious, convenient food accessible to every
-                  Nigerian family while building a culture of smart saving
-                  through our innovative Asusu system.
+                  We're going to make food a fundamental right of every human in
+                  Africa. By making food very and easily accessible to every one
+                  while building a culture of smart saving on foods and
+                  groceries spending.
                 </p>
                 <p className="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
                   We believe everyone deserves stress-free access to quality

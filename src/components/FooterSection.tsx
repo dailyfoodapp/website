@@ -3,6 +3,16 @@ import { Instagram, Music2, Facebook, Smartphone } from "lucide-react";
 import Logo from "@/assets/logo-footer.png";
 
 const FooterSection = () => {
+  const scrollToSignup = () => {
+    const signupSection = document.getElementById("signup-form");
+    if (signupSection) {
+      signupSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
   const socialLinks = [
     {
       icon: Instagram,
@@ -41,8 +51,8 @@ const FooterSection = () => {
             </div>
 
             <p className="text-gray-300 leading-relaxed mb-6">
-              Revolutionizing food delivery with fresh ingredients,
-              lightning-fast service, and an experience that puts taste first.
+              Helping you to spend less on foods and groceries, and making you
+              to save more on your food expenses.
             </p>
 
             {/* Social links */}
@@ -107,7 +117,10 @@ const FooterSection = () => {
             </div>
 
             <div className="mt-8">
-              <Button className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-6 rounded-full font-semibold transform hover:scale-105 transition-all duration-300">
+              <Button
+                onClick={scrollToSignup}
+                className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-6 rounded-full font-semibold transform hover:scale-105 transition-all duration-300"
+              >
                 Get Notified
               </Button>
             </div>
