@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from 'react'
 import {
   Zap,
   ShoppingCart,
@@ -14,181 +14,181 @@ import {
   Target,
   Heart,
   Lightbulb,
-} from "lucide-react";
-import "./TypewriterAnimation.css";
+} from 'lucide-react'
+import './TypewriterAnimation.css'
 
 const FeaturesSection = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const taglineRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false)
+  const taglineRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true);
+          setIsVisible(true)
         }
       },
       {
         threshold: 0.1, // Trigger when 10% of the element is visible
-        rootMargin: "0px", // No margin adjustments
+        rootMargin: '0px', // No margin adjustments
       }
-    );
+    )
 
-    const currentRef = taglineRef.current;
+    const currentRef = taglineRef.current
     if (currentRef) {
-      observer.observe(currentRef);
+      observer.observe(currentRef)
     }
 
     return () => {
       if (currentRef) {
-        observer.unobserve(currentRef);
+        observer.unobserve(currentRef)
       }
-    };
-  }, []);
+    }
+  }, [])
 
   const howItWorks = [
     {
       icon: ShoppingCart,
-      title: "Choose Your Plan",
+      title: 'Choose Your Plan',
       description:
-        "Pick a daily meal plan, grocery subscription, or join a thrift (Asusu) group.",
-      color: "from-yellow-400 to-orange-500",
+        'Pick a daily meal plan, grocery subscription, or join a thrift (Asusu) group.',
+      color: 'from-yellow-400 to-orange-500',
     },
     {
       icon: MapPin,
-      title: "Real-Time Delivery",
+      title: 'Real-Time Delivery',
       description:
-        "Track your orders live as they move from vendor to doorstep.",
-      color: "from-red-400 to-pink-500",
+        'Track your orders live as they move from vendor to doorstep.',
+      color: 'from-red-400 to-pink-500',
     },
     {
       icon: PiggyBank,
-      title: "Save with Asusu",
+      title: 'Save with Asusu',
       description:
-        "Automate contributions to a savings plan and redeem funds for food and essentials.",
-      color: "from-green-400 to-blue-500",
+        'Automate contributions to a savings plan and redeem funds for food and essentials.',
+      color: 'from-green-400 to-blue-500',
     },
-  ];
+  ]
 
   const coreFeatures = [
     {
       icon: Zap,
-      title: "Daily Food Subscription",
+      title: 'Daily Food Subscription',
       description:
-        "Save more with foods and groceries. Get fresh ingredients and meals delivered to your doorstep.",
-      color: "from-orange-400 to-red-500",
+        'Save more with foods and groceries. Get fresh ingredients and meals delivered to your doorstep.',
+      color: 'from-orange-400 to-red-500',
     },
     {
       icon: ShoppingCart,
-      title: "Grocery Delivery Plans",
+      title: 'Grocery Delivery Plans',
       description:
-        "Farm-fresh produce and essentials with scheduled recurring deliveries, ideal for homes and mini-marts.",
-      color: "from-blue-400 to-purple-500",
+        'Farm-fresh produce and essentials with scheduled recurring deliveries, ideal for homes and mini-marts.',
+      color: 'from-blue-400 to-purple-500',
     },
     {
       icon: PiggyBank,
-      title: "Asusu (Savings) Plans",
+      title: 'Asusu (Savings) Plans',
       description:
-        "Create or join a savings plan with weekly/monthly auto-contributions. Use funds for food subscriptions or withdraw.",
-      color: "from-green-400 to-teal-500",
+        'Create or join a savings plan with weekly/monthly auto-contributions. Use funds for food subscriptions or withdraw.',
+      color: 'from-green-400 to-teal-500',
     },
     {
       icon: MapPin,
-      title: "Real-Time Tracking",
+      title: 'Real-Time Tracking',
       description:
-        "GPS-based tracking for every delivery. Customers, vendors, and riders see live updates.",
-      color: "from-yellow-400 to-orange-500",
+        'GPS-based tracking for every delivery. Customers, vendors, and riders see live updates.',
+      color: 'from-yellow-400 to-orange-500',
     },
     {
       icon: Settings,
-      title: "Vendor Control Panel",
+      title: 'Vendor Control Panel',
       description:
-        "Full order visibility with manual rider assignment and easy delivery status monitoring.",
-      color: "from-purple-400 to-pink-500",
+        'Full order visibility with manual rider assignment and easy delivery status monitoring.',
+      color: 'from-purple-400 to-pink-500',
     },
     {
       icon: Brain,
-      title: "AI Food Recommendations",
+      title: 'AI Food Recommendations',
       description:
-        "Get food recipes and meal plans based on your preferences and dietary restrictions.",
-      color: "from-green-400 to-teal-500",
+        'Get food recipes and meal plans based on your preferences and dietary restrictions.',
+      color: 'from-green-400 to-teal-500',
     },
     {
       icon: PiggyBank,
-      title: "Food Financing",
+      title: 'Food Financing',
       description:
-        "Flexible payment plans and micro-loans for food purchases. Making quality nutrition accessible to everyone. (Coming in a future version)",
-      color: "from-purple-400 to-indigo-500",
+        'Flexible payment plans and micro-loans for food purchases. Making quality nutrition accessible to everyone. (Coming in a future version)',
+      color: 'from-purple-400 to-indigo-500',
     },
-  ];
+  ]
 
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4">
+    <section className="bg-white py-20">
+      <div className="mx-auto max-w-7xl px-4">
         {/* Hero Tagline */}
         <div
           ref={taglineRef}
-          className="relative text-center mb-20 h-[60vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-50 via-white to-orange-50"
+          className="relative mb-20 flex h-[60vh] items-center justify-center overflow-hidden bg-gradient-to-br from-gray-50 via-white to-orange-50 text-center"
         >
           {/* Animated Background Elements */}
           <div className="absolute inset-0 overflow-hidden">
             {/* Floating Orbs */}
-            <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-gradient-to-r from-orange-200/20 to-red-200/20 rounded-full blur-xl animate-pulse"></div>
+            <div className="absolute left-1/4 top-1/4 h-32 w-32 animate-pulse rounded-full bg-gradient-to-r from-orange-200/20 to-red-200/20 blur-xl"></div>
             <div
-              className="absolute top-3/4 right-1/4 w-40 h-40 bg-gradient-to-r from-blue-200/20 to-purple-200/20 rounded-full blur-xl animate-pulse"
-              style={{ animationDelay: "1s" }}
+              className="absolute right-1/4 top-3/4 h-40 w-40 animate-pulse rounded-full bg-gradient-to-r from-blue-200/20 to-purple-200/20 blur-xl"
+              style={{ animationDelay: '1s' }}
             ></div>
             <div
-              className="absolute bottom-1/3 left-1/3 w-24 h-24 bg-gradient-to-r from-green-200/20 to-teal-200/20 rounded-full blur-xl animate-pulse"
-              style={{ animationDelay: "2s" }}
+              className="absolute bottom-1/3 left-1/3 h-24 w-24 animate-pulse rounded-full bg-gradient-to-r from-green-200/20 to-teal-200/20 blur-xl"
+              style={{ animationDelay: '2s' }}
             ></div>
 
             {/* Moving Gradient Lines */}
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-300/30 to-transparent animate-pulse"></div>
+            <div className="absolute left-0 top-0 h-1 w-full animate-pulse bg-gradient-to-r from-transparent via-orange-300/30 to-transparent"></div>
             <div
-              className="absolute bottom-0 right-0 w-full h-1 bg-gradient-to-l from-transparent via-blue-300/30 to-transparent animate-pulse"
-              style={{ animationDelay: "1.5s" }}
+              className="absolute bottom-0 right-0 h-1 w-full animate-pulse bg-gradient-to-l from-transparent via-blue-300/30 to-transparent"
+              style={{ animationDelay: '1.5s' }}
             ></div>
 
             {/* Geometric Shapes */}
             <div
-              className="absolute top-16 right-16 w-8 h-8 border-2 border-orange-300/40 rotate-45 animate-spin"
-              style={{ animationDuration: "8s" }}
+              className="absolute right-16 top-16 h-8 w-8 rotate-45 animate-spin border-2 border-orange-300/40"
+              style={{ animationDuration: '8s' }}
             ></div>
             <div
-              className="absolute bottom-16 left-16 w-6 h-6 border-2 border-blue-300/40 rotate-45 animate-spin"
-              style={{ animationDuration: "6s", animationDirection: "reverse" }}
+              className="absolute bottom-16 left-16 h-6 w-6 rotate-45 animate-spin border-2 border-blue-300/40"
+              style={{ animationDuration: '6s', animationDirection: 'reverse' }}
             ></div>
             <div
-              className="absolute top-1/2 right-8 w-4 h-4 bg-red-300/40 rounded-full animate-bounce"
-              style={{ animationDelay: "0.5s" }}
+              className="absolute right-8 top-1/2 h-4 w-4 animate-bounce rounded-full bg-red-300/40"
+              style={{ animationDelay: '0.5s' }}
             ></div>
             <div
-              className="absolute top-1/3 left-8 w-3 h-3 bg-green-300/40 rounded-full animate-bounce"
-              style={{ animationDelay: "1.2s" }}
+              className="absolute left-8 top-1/3 h-3 w-3 animate-bounce rounded-full bg-green-300/40"
+              style={{ animationDelay: '1.2s' }}
             ></div>
           </div>
 
           {/* Main Content */}
           <div className="relative z-10">
-            <h1 className="text-4xl lg:text-7xl font-extrabold text-gray-900 mb-6 leading-tight">
+            <h1 className="mb-6 text-4xl font-extrabold leading-tight text-gray-900 lg:text-7xl">
               <span
                 className={`typewriter-base ${
-                  isVisible ? "typewriter-line-1-active" : "typewriter-line-1"
+                  isVisible ? 'typewriter-line-1-active' : 'typewriter-line-1'
                 }`}
               >
                 Daily Foods App
               </span>
               <span
-                className={`typewriter-base text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 ${
-                  isVisible ? "typewriter-line-2-active" : "typewriter-line-2"
+                className={`typewriter-base bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 bg-clip-text text-transparent ${
+                  isVisible ? 'typewriter-line-2-active' : 'typewriter-line-2'
                 }`}
               >
                 Offers more than
               </span>
               <span
-                className={`typewriter-base text-3xl lg:text-5xl font-semibold text-gray-600 mt-4 ${
-                  isVisible ? "typewriter-line-3-active" : "typewriter-line-3"
+                className={`typewriter-base mt-4 text-3xl font-semibold text-gray-600 lg:text-5xl ${
+                  isVisible ? 'typewriter-line-3-active' : 'typewriter-line-3'
                 }`}
               >
                 just food services
@@ -198,35 +198,35 @@ const FeaturesSection = () => {
         </div>
 
         {/* How It Works Section */}
-        <div id="how-it-works" className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+        <div id="how-it-works" className="animate-fade-in mb-16 text-center">
+          <h2 className="mb-6 text-4xl font-bold text-gray-900 lg:text-5xl">
             How It
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500">
-              {" "}
+            <span className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
+              {' '}
               Works
             </span>
           </h2>
         </div>
 
         {/* How It Works Grid */}
-        <div className="grid md:grid-cols-3 gap-8 mb-20">
+        <div className="mb-20 grid gap-8 md:grid-cols-3">
           {howItWorks.map((feature, index) => (
             <div
               key={index}
-              className="group p-8 rounded-2xl bg-gray-50 hover:bg-white hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 animate-fade-in cursor-default"
+              className="animate-fade-in group transform cursor-default rounded-2xl bg-gray-50 p-8 transition-all duration-500 hover:-translate-y-2 hover:bg-white hover:shadow-xl"
               style={{ animationDelay: `${index * 200}ms` }}
             >
               <div
-                className={`w-16 h-16 rounded-xl bg-gradient-to-br ${feature.color} p-4 mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}
+                className={`h-16 w-16 rounded-xl bg-gradient-to-br ${feature.color} mb-6 p-4 shadow-lg transition-transform duration-300 group-hover:scale-110`}
               >
-                <feature.icon className="w-full h-full text-white" />
+                <feature.icon className="h-full w-full text-white" />
               </div>
 
-              <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-orange-600 transition-colors duration-300">
+              <h3 className="mb-3 text-xl font-bold text-gray-900 transition-colors duration-300 group-hover:text-orange-600">
                 {feature.title}
               </h3>
 
-              <p className="text-gray-600 leading-relaxed">
+              <p className="leading-relaxed text-gray-600">
                 {feature.description}
               </p>
             </div>
@@ -234,35 +234,35 @@ const FeaturesSection = () => {
         </div>
 
         {/* Core Features Section */}
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+        <div className="animate-fade-in mb-16 text-center">
+          <h2 className="mb-6 text-4xl font-bold text-gray-900 lg:text-5xl">
             Core
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500">
-              {" "}
+            <span className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
+              {' '}
               Features
             </span>
           </h2>
         </div>
 
         {/* Core Features Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {coreFeatures.map((feature, index) => (
             <div
               key={index}
-              className="group p-8 rounded-2xl bg-gray-50 hover:bg-white hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 animate-fade-in cursor-default"
+              className="animate-fade-in group transform cursor-default rounded-2xl bg-gray-50 p-8 transition-all duration-500 hover:-translate-y-2 hover:bg-white hover:shadow-xl"
               style={{ animationDelay: `${index * 200}ms` }}
             >
               <div
-                className={`w-16 h-16 rounded-xl bg-gradient-to-br ${feature.color} p-4 mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}
+                className={`h-16 w-16 rounded-xl bg-gradient-to-br ${feature.color} mb-6 p-4 shadow-lg transition-transform duration-300 group-hover:scale-110`}
               >
-                <feature.icon className="w-full h-full text-white" />
+                <feature.icon className="h-full w-full text-white" />
               </div>
 
-              <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-orange-600 transition-colors duration-300">
+              <h3 className="mb-3 text-xl font-bold text-gray-900 transition-colors duration-300 group-hover:text-orange-600">
                 {feature.title}
               </h3>
 
-              <p className="text-gray-600 leading-relaxed">
+              <p className="leading-relaxed text-gray-600">
                 {feature.description}
               </p>
             </div>
@@ -270,28 +270,28 @@ const FeaturesSection = () => {
         </div>
 
         {/* Use Cases */}
-        <div className="mt-20 bg-gradient-to-br from-orange-50 to-red-50 rounded-3xl p-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+        <div className="mt-20 rounded-3xl bg-gradient-to-br from-orange-50 to-red-50 p-12">
+          <h2 className="mb-8 text-center text-3xl font-bold text-gray-900">
             Who Is This For?
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="group bg-white p-8 rounded-xl shadow-sm hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 animate-fade-in cursor-default border border-gray-100 hover:border-orange-200">
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-400 to-purple-500 p-3 mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                <Briefcase className="w-full h-full text-white" />
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <div className="animate-fade-in group transform cursor-default rounded-xl border border-gray-100 bg-white p-8 shadow-sm transition-all duration-500 hover:-translate-y-3 hover:border-orange-200 hover:shadow-2xl">
+              <div className="mb-4 h-12 w-12 rounded-lg bg-gradient-to-br from-blue-400 to-purple-500 p-3 shadow-lg transition-transform duration-300 group-hover:scale-110">
+                <Briefcase className="h-full w-full text-white" />
               </div>
-              <h3 className="font-bold text-lg mb-2 group-hover:text-blue-600 transition-colors duration-300">
+              <h3 className="mb-2 text-lg font-bold transition-colors duration-300 group-hover:text-blue-600">
                 Busy Professionals
               </h3>
               <p className="text-gray-600">Subscribe to hot meals</p>
             </div>
             <div
-              className="group bg-white p-8 rounded-xl shadow-sm hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 animate-fade-in cursor-default border border-gray-100 hover:border-green-200"
-              style={{ animationDelay: "100ms" }}
+              className="animate-fade-in group transform cursor-default rounded-xl border border-gray-100 bg-white p-8 shadow-sm transition-all duration-500 hover:-translate-y-3 hover:border-green-200 hover:shadow-2xl"
+              style={{ animationDelay: '100ms' }}
             >
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-green-400 to-emerald-500 p-3 mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                <Home className="w-full h-full text-white" />
+              <div className="mb-4 h-12 w-12 rounded-lg bg-gradient-to-br from-green-400 to-emerald-500 p-3 shadow-lg transition-transform duration-300 group-hover:scale-110">
+                <Home className="h-full w-full text-white" />
               </div>
-              <h3 className="font-bold text-lg mb-2 group-hover:text-green-600 transition-colors duration-300">
+              <h3 className="mb-2 text-lg font-bold transition-colors duration-300 group-hover:text-green-600">
                 Families
               </h3>
               <p className="text-gray-600">
@@ -299,13 +299,13 @@ const FeaturesSection = () => {
               </p>
             </div>
             <div
-              className="group bg-white p-8 rounded-xl shadow-sm hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 animate-fade-in cursor-default border border-gray-100 hover:border-orange-200"
-              style={{ animationDelay: "200ms" }}
+              className="animate-fade-in group transform cursor-default rounded-xl border border-gray-100 bg-white p-8 shadow-sm transition-all duration-500 hover:-translate-y-3 hover:border-orange-200 hover:shadow-2xl"
+              style={{ animationDelay: '200ms' }}
             >
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-400 to-red-500 p-3 mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                <Store className="w-full h-full text-white" />
+              <div className="mb-4 h-12 w-12 rounded-lg bg-gradient-to-br from-orange-400 to-red-500 p-3 shadow-lg transition-transform duration-300 group-hover:scale-110">
+                <Store className="h-full w-full text-white" />
               </div>
-              <h3 className="font-bold text-lg mb-2 group-hover:text-orange-600 transition-colors duration-300">
+              <h3 className="mb-2 text-lg font-bold transition-colors duration-300 group-hover:text-orange-600">
                 Small Vendors
               </h3>
               <p className="text-gray-600">
@@ -313,13 +313,13 @@ const FeaturesSection = () => {
               </p>
             </div>
             <div
-              className="group bg-white p-8 rounded-xl shadow-sm hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 animate-fade-in cursor-default border border-gray-100 hover:border-purple-200"
-              style={{ animationDelay: "300ms" }}
+              className="animate-fade-in group transform cursor-default rounded-xl border border-gray-100 bg-white p-8 shadow-sm transition-all duration-500 hover:-translate-y-3 hover:border-purple-200 hover:shadow-2xl"
+              style={{ animationDelay: '300ms' }}
             >
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-400 to-pink-500 p-3 mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                <UsersRound className="w-full h-full text-white" />
+              <div className="mb-4 h-12 w-12 rounded-lg bg-gradient-to-br from-purple-400 to-pink-500 p-3 shadow-lg transition-transform duration-300 group-hover:scale-110">
+                <UsersRound className="h-full w-full text-white" />
               </div>
-              <h3 className="font-bold text-lg mb-2 group-hover:text-purple-600 transition-colors duration-300">
+              <h3 className="mb-2 text-lg font-bold transition-colors duration-300 group-hover:text-purple-600">
                 Community Savers
               </h3>
               <p className="text-gray-600">Save together via Asusu</p>
@@ -328,15 +328,15 @@ const FeaturesSection = () => {
         </div>
 
         {/* Testimonials */}
-        <div className="mt-20 text-center animate-fade-in">
-          <h2 className="text-3xl font-bold text-gray-900 mb-12">
+        <div className="animate-fade-in mt-20 text-center">
+          <h2 className="mb-12 text-3xl font-bold text-gray-900">
             Real Stories from Real Users
           </h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="group bg-gray-50 p-8 rounded-2xl text-left hover:bg-white hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 animate-fade-in cursor-default border border-transparent hover:border-orange-200">
+          <div className="grid gap-8 md:grid-cols-2">
+            <div className="animate-fade-in group transform cursor-default rounded-2xl border border-transparent bg-gray-50 p-8 text-left transition-all duration-500 hover:-translate-y-3 hover:border-orange-200 hover:bg-white hover:shadow-2xl">
               <div className="relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-400/10 to-red-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl"></div>
-                <p className="text-lg text-gray-600 italic mb-4 relative z-10 group-hover:text-gray-700 transition-colors duration-300">
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-orange-400/10 to-red-400/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
+                <p className="relative z-10 mb-4 text-lg italic text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
                   "As a working mom with two kids, I was drowning in weekend
                   grocery runs and meal prep. I just wanted someone to handle
                   the logistics so I could focus on my family and career. I
@@ -344,18 +344,18 @@ const FeaturesSection = () => {
                   without the constant planning and shopping stress. This
                   platform is exactly what I was praying for."
                 </p>
-                <p className="font-semibold relative z-10 group-hover:text-orange-600 transition-colors duration-300">
+                <p className="relative z-10 font-semibold transition-colors duration-300 group-hover:text-orange-600">
                   — Chinwe, Marketing Manager, Lagos
                 </p>
               </div>
             </div>
             <div
-              className="group bg-gray-50 p-8 rounded-2xl text-left hover:bg-white hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 animate-fade-in cursor-default border border-transparent hover:border-green-200"
-              style={{ animationDelay: "200ms" }}
+              className="animate-fade-in group transform cursor-default rounded-2xl border border-transparent bg-gray-50 p-8 text-left transition-all duration-500 hover:-translate-y-3 hover:border-green-200 hover:bg-white hover:shadow-2xl"
+              style={{ animationDelay: '200ms' }}
             >
               <div className="relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-green-400/10 to-blue-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl"></div>
-                <p className="text-lg text-gray-600 italic mb-4 relative z-10 group-hover:text-gray-700 transition-colors duration-300">
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-green-400/10 to-blue-400/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
+                <p className="relative z-10 mb-4 text-lg italic text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
                   "I wanted to eat healthier but kept failing at saving money
                   for good food. I wished someone could just take money from my
                   salary before I could spend it on other things, and only let
@@ -363,7 +363,7 @@ const FeaturesSection = () => {
                   what I dreamed of - forced savings that I can only spend on
                   food."
                 </p>
-                <p className="font-semibold relative z-10 group-hover:text-green-600 transition-colors duration-300">
+                <p className="relative z-10 font-semibold transition-colors duration-300 group-hover:text-green-600">
                   — Ahmed, Software Developer, Abuja
                 </p>
               </div>
@@ -372,27 +372,27 @@ const FeaturesSection = () => {
         </div>
 
         {/* Who Are We Section */}
-        <div className="mt-24 bg-gradient-to-br from-gray-50 to-orange-50 rounded-3xl p-5 lg:p-12 animate-fade-in">
-          <div className="grid md:grid-cols-2 gap-12">
+        <div className="animate-fade-in mt-24 rounded-3xl bg-gradient-to-br from-gray-50 to-orange-50 p-5 lg:p-12">
+          <div className="grid gap-12 md:grid-cols-2">
             {/* Who We Are */}
-            <div className="group bg-white p-5 lg:p-10 rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 animate-fade-in border border-gray-100 hover:border-blue-200">
-              <div className="flex items-center mb-6">
-                <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-400 to-purple-500 p-4 group-hover:scale-110 transition-transform duration-300 shadow-lg mr-4">
-                  <Users className="w-full h-full text-white" />
+            <div className="animate-fade-in group transform rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-blue-200 hover:shadow-2xl lg:p-10">
+              <div className="mb-6 flex items-center">
+                <div className="mr-4 h-16 w-16 rounded-xl bg-gradient-to-br from-blue-400 to-purple-500 p-4 shadow-lg transition-transform duration-300 group-hover:scale-110">
+                  <Users className="h-full w-full text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
+                <h3 className="text-2xl font-bold text-gray-900 transition-colors duration-300 group-hover:text-blue-600">
                   Who We Are
                 </h3>
               </div>
 
               <div className="space-y-4">
-                <p className="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
+                <p className="leading-relaxed text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
                   We're a passionate team of food enthusiasts, tech innovators,
                   and community builders from across Nigeria. Born out of our
                   own struggles with spending more than 70% of our earnings on
                   food, meal planning.
                 </p>
-                <p className="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
+                <p className="leading-relaxed text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
                   Our diverse backgrounds in technology, food service, and
                   financial inclusion drive us to create solutions that truly
                   understand the daily challenges of Nigerian families and
@@ -400,9 +400,9 @@ const FeaturesSection = () => {
                 </p>
               </div>
 
-              <div className="mt-6 flex items-center space-x-2 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
-                <Heart className="w-5 h-5 text-red-500" />
-                <span className="text-sm text-gray-500 group-hover:text-gray-600 transition-colors duration-300">
+              <div className="mt-6 flex items-center space-x-2 opacity-80 transition-opacity duration-300 group-hover:opacity-100">
+                <Heart className="h-5 w-5 text-red-500" />
+                <span className="text-sm text-gray-500 transition-colors duration-300 group-hover:text-gray-600">
                   Built with love for our community
                 </span>
               </div>
@@ -410,35 +410,35 @@ const FeaturesSection = () => {
 
             {/* Our Mission */}
             <div
-              className="group bg-white p-5 lg:p-10 rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 animate-fade-in border border-gray-100 hover:border-orange-200"
-              style={{ animationDelay: "200ms" }}
+              className="animate-fade-in group transform rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-orange-200 hover:shadow-2xl lg:p-10"
+              style={{ animationDelay: '200ms' }}
             >
-              <div className="flex items-center mb-6">
-                <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-orange-400 to-red-500 p-4 group-hover:scale-110 transition-transform duration-300 shadow-lg mr-4">
-                  <Target className="w-full h-full text-white" />
+              <div className="mb-6 flex items-center">
+                <div className="mr-4 h-16 w-16 rounded-xl bg-gradient-to-br from-orange-400 to-red-500 p-4 shadow-lg transition-transform duration-300 group-hover:scale-110">
+                  <Target className="h-full w-full text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 group-hover:text-orange-600 transition-colors duration-300">
+                <h3 className="text-2xl font-bold text-gray-900 transition-colors duration-300 group-hover:text-orange-600">
                   Our Mission
                 </h3>
               </div>
 
               <div className="space-y-4">
-                <p className="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
+                <p className="leading-relaxed text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
                   We're going to make food a fundamental right of every human in
                   Africa. By making food very and easily accessible to every one
                   while building a culture of smart saving on foods and
                   groceries spending.
                 </p>
-                <p className="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
+                <p className="leading-relaxed text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
                   We believe everyone deserves stress-free access to quality
                   meals and the financial tools to maintain healthy eating
                   habits, regardless of their busy schedule or income level.
                 </p>
               </div>
 
-              <div className="mt-6 flex items-center space-x-2 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
-                <Lightbulb className="w-5 h-5 text-yellow-500" />
-                <span className="text-sm text-gray-500 group-hover:text-gray-600 transition-colors duration-300">
+              <div className="mt-6 flex items-center space-x-2 opacity-80 transition-opacity duration-300 group-hover:opacity-100">
+                <Lightbulb className="h-5 w-5 text-yellow-500" />
+                <span className="text-sm text-gray-500 transition-colors duration-300 group-hover:text-gray-600">
                   Innovating for a better tomorrow
                 </span>
               </div>
@@ -447,7 +447,7 @@ const FeaturesSection = () => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default FeaturesSection;
+export default FeaturesSection

@@ -41,7 +41,8 @@
 .typewriter-line-1-active {
   display: inline-block;
   border-color: rgb(17 24 39); /* gray-900 */
-  animation: typewriter 1s steps(9, end) 0s 1 normal both,
+  animation:
+    typewriter 1s steps(9, end) 0s 1 normal both,
     blink 0.5s steps(2, start) 0s 2 normal forwards;
 }
 
@@ -54,7 +55,8 @@
 .typewriter-line-2-active {
   display: block;
   border-color: rgb(249 115 22); /* orange-500 */
-  animation: typewriter 0.8s steps(6, end) 1.2s 1 normal both,
+  animation:
+    typewriter 0.8s steps(6, end) 1.2s 1 normal both,
     blink 0.5s steps(2, start) 1.2s 2 normal forwards;
 }
 
@@ -67,7 +69,8 @@
 .typewriter-line-3-active {
   display: block;
   border-color: rgb(75 85 99); /* gray-600 */
-  animation: typewriter 1.5s steps(16, end) 2.2s 1 normal both,
+  animation:
+    typewriter 1.5s steps(16, end) 2.2s 1 normal both,
     blink 0.5s steps(2, start) 2.2s 3 normal forwards;
 }
 
@@ -84,6 +87,7 @@
   max-width: fit-content;
   margin-left: auto;
   margin-right: auto;
-  animation: typewriter 2s steps(80, end) 4s 1 normal both,
+  animation:
+    typewriter 2s steps(80, end) 4s 1 normal both,
     blink 0.5s steps(2, start) 4s 4 normal forwards;
 }
