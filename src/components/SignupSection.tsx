@@ -11,52 +11,54 @@ const SignupSection = () => {
   const [isPending, startTransition] = useTransition()
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-
+    e.preventDefault();
+  
     if (!email || !whatsapp) {
-      toast.error('Missing Information', {
-        description: 'Please fill in both email and WhatsApp number',
-      })
-      return
+      toast.error("Missing Information", {
+        description: "Please fill in both email and WhatsApp number",
+      });
+      return;
     }
-
+  
     startTransition(async () => {
       try {
         const response = await fetch(
-          'https://api.general.abincii.online/api/v1/waitlist/join',
+          "https://api.general.abincii.online/api/v1/waitlist/join",
           {
-            method: 'POST',
+            method: "POST",
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
             },
             body: JSON.stringify({
               name: whatsapp,
               email,
-              referralSource: 'Waitlist Form',
+              referralSource: "Waitlist Form",
             }),
           }
-        )
-
+        );
+  
+        const result = await response.json();
+  
         if (!response.ok) {
-          throw new Error('Failed to submit')
+          throw new Error(result.message || result.error || "Submission failed");
         }
+  
+  
+        toast.success("Success! 🎉", {
+          description: "You're on the waitlist! We'll notify you when we launch.",
+        });
+  
+        setEmail("");
+        setWhatsapp("");
 
-        toast.success('Success! 🎉', {
-          description:
-            "You're on the waitlist! We'll notify you when we launch.",
-        })
-
-        setEmail('')
-        setWhatsapp('')
-      } catch (err) {
-        console.error('Error joining waitlist:', err)
-        toast.error('Something went wrong', {
-          description: 'Could not join the waitlist. Please try again later.',
-        })
+      } catch (err: unknown) {
+        toast.error("Something went wrong", {
+          description: err instanceof Error ? err.message : "Could not join the waitlist.",
+        });
       }
-    })
-  }
-
+    });
+  };
+  
   return (
     <section
       id="signup-form"
