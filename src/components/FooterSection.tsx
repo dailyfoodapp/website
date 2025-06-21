@@ -106,7 +106,7 @@ const FooterSection = () => {
 
             <div className="space-y-4 text-gray-300">
               <p>
-                <span className="text-orange-500">📧</span> hello@dailyfoods.app
+                <span className="text-orange-500">📧</span> hello@dailyfood.app
               </p>
               <p>
                 <span className="text-orange-500">📱</span> Coming Soon
