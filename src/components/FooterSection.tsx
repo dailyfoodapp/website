@@ -46,13 +46,13 @@ const FooterSection = () => {
           {/* Brand section */}
           <div className="text-center lg:text-left animate-fade-in">
             <div className="flex items-center justify-center lg:justify-start gap-2 mb-6">
-              <img src={Logo} alt="Daily Foods Logo" className="w-auto h-10" />
-              {/* <span className="text-2xl font-bold">Daily Foods</span> */}
+              <img src={Logo} alt="Daily Food Logo" className="w-auto h-10" />
+              {/* <span className="text-2xl font-bold">Daily Food</span> */}
             </div>
 
             <p className="text-gray-300 leading-relaxed mb-6">
-              Helping you to spend less on foods and groceries, and making you
-              to save more on your food expenses.
+              Helping you to spend less on and groceries, and making you to save
+              more on your food expenses.
             </p>
 
             {/* Social links */}
@@ -106,7 +106,7 @@ const FooterSection = () => {
 
             <div className="space-y-4 text-gray-300">
               <p>
-                <span className="text-orange-500">📧</span> hello@dailyfoods.app
+                <span className="text-orange-500">📧</span> info@dailyfood.app
               </p>
               <p>
                 <span className="text-orange-500">📱</span> Coming Soon
@@ -130,7 +130,7 @@ const FooterSection = () => {
         {/* Bottom section */}
         <div className="mt-16 pt-8 border-t border-gray-800 text-center text-gray-400">
           <p>
-            &copy; 2025 Daily Foods. All rights reserved. Made with ❤️ for food
+            &copy; 2025 Daily Food. All rights reserved. Made with ❤️ for food
             lovers.
           </p>
         </div>

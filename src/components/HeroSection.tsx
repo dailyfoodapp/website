@@ -39,14 +39,10 @@ const HeroSection = () => {
         {/* Left content */}
         <div className="text-center lg:text-left animate-fade-in">
           <div className="flex gap-2 mb-6">
-            <img src={Logo} alt="Daily Foods Logo" className="w-auto h-10" />
-            <img
-              src={LogoText}
-              alt="Daily Foods Logo"
-              className="w-auto h-10"
-            />
+            <img src={Logo} alt="Daily Food Logo" className="w-auto h-10" />
+            <img src={LogoText} alt="Daily Food Logo" className="w-auto h-10" />
             {/* <span className="text-orange-600 font-semibold text-lg">
-              Daily Foods
+              Daily Food
             </span> */}
           </div>
 
@@ -58,7 +54,7 @@ const HeroSection = () => {
           </h1>
 
           <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-            Get ready for the ultimate savings on foods and groceries. You don't
+            Get ready for the ultimate savings on food and groceries. You don't
             have to spend your arms and legs to feed anymore. Save more than 60%
             on food and grocery shopping with our innovative food service.
           </p>
@@ -92,11 +88,11 @@ const HeroSection = () => {
                     <Smartphone className="w-32 h-32 mx-auto animate-pulse" />
                     <img
                       src={LogoIcon}
-                      alt="Daily Foods Logo"
+                      alt="Daily Food Logo"
                       className="w-auto h-10 mx-auto animate-pulse absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2"
                     />
                   </div>
-                  <h3 className="text-2xl font-bold mb-2">Daily Foods App</h3>
+                  <h3 className="text-2xl font-bold mb-2">Daily Food App</h3>
                   <p className="text-lg opacity-90">Order. Enjoy. Repeat.</p>
                 </div>
 

@@ -75,7 +75,7 @@ const FeaturesSection = () => {
       icon: Zap,
       title: "Daily Food Subscription",
       description:
-        "Save more with foods and groceries. Get fresh ingredients and meals delivered to your doorstep.",
+        "Save more with food and groceries. Get fresh ingredients and meals delivered to your doorstep.",
       color: "from-orange-400 to-red-500",
     },
     {
@@ -177,7 +177,7 @@ const FeaturesSection = () => {
                   isVisible ? "typewriter-line-1-active" : "typewriter-line-1"
                 }`}
               >
-                Daily Foods App
+                Daily Food App
               </span>
               <span
                 className={`typewriter-base text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 ${
@@ -426,8 +426,8 @@ const FeaturesSection = () => {
                 <p className="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
                   We're going to make food a fundamental right of every human in
                   Africa. By making food very and easily accessible to every one
-                  while building a culture of smart saving on foods and
-                  groceries spending.
+                  while building a culture of smart saving on food and groceries
+                  spending.
                 </p>
                 <p className="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
                   We believe everyone deserves stress-free access to quality
