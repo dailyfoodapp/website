@@ -1,48 +1,48 @@
-import { Button } from "@/components/ui/button";
-import { Instagram, Music2, Facebook, Smartphone } from "lucide-react";
-import Logo from "@/assets/logo-footer.png";
+import { Button } from '@/components/ui/button'
+import { Instagram, Music2, Facebook, Smartphone } from 'lucide-react'
+import Logo from '@/assets/logo-footer.png'
 
 const FooterSection = () => {
   const scrollToSignup = () => {
-    const signupSection = document.getElementById("signup-form");
+    const signupSection = document.getElementById('signup-form')
     if (signupSection) {
       signupSection.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+        behavior: 'smooth',
+        block: 'start',
+      })
     }
-  };
+  }
 
   const socialLinks = [
     {
       icon: Instagram,
-      href: "https://www.instagram.com/dailyfoodapp",
-      color: "hover:text-pink-500",
+      href: 'https://www.instagram.com/dailyfoodapp',
+      color: 'hover:text-pink-500',
     },
     {
       icon: Music2,
-      href: "https://www.tiktok.com/@dailyfoodapp",
-      color: "hover:text-black",
+      href: 'https://www.tiktok.com/@dailyfoodapp',
+      color: 'hover:text-black',
     },
     {
       icon: Facebook,
-      href: "https://www.facebook.com/dailyfoodapp",
-      color: "hover:text-blue-600",
+      href: 'https://www.facebook.com/dailyfoodapp',
+      color: 'hover:text-blue-600',
     },
-  ];
+  ]
 
   return (
-    <footer className="bg-gray-900 text-white py-16 relative overflow-hidden">
+    <footer className="relative overflow-hidden bg-gray-900 py-16 text-white">
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-10 left-10 text-8xl">🍕</div>
-        <div className="absolute top-20 right-20 text-6xl">🍔</div>
+        <div className="absolute left-10 top-10 text-8xl">🍕</div>
+        <div className="absolute right-20 top-20 text-6xl">🍔</div>
         <div className="absolute bottom-20 left-1/4 text-7xl">🍜</div>
         <div className="absolute bottom-10 right-10 text-5xl">🍰</div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 relative z-10">
-        <div className="grid lg:grid-cols-3 gap-12 items-center">
+      <div className="relative z-10 mx-auto max-w-6xl px-4">
+        <div className="grid items-center gap-12 lg:grid-cols-3">
           {/* Brand section */}
           <div className="text-center lg:text-left animate-fade-in">
             <div className="flex items-center justify-center lg:justify-start gap-2 mb-6">
@@ -56,30 +56,30 @@ const FooterSection = () => {
             </p>
 
             {/* Social links */}
-            <div className="flex gap-4 justify-center lg:justify-start">
+            <div className="flex justify-center gap-4 lg:justify-start">
               {socialLinks.map((social, index) => (
                 <Button
                   key={index}
                   variant="ghost"
                   size="icon"
-                  onClick={() => window.open(social.href, "_blank")}
-                  className={`w-12 h-12 rounded-full bg-gray-800 hover:bg-gray-700 ${social.color} transition-all duration-300 transform hover:scale-110`}
+                  onClick={() => window.open(social.href, '_blank')}
+                  className={`h-12 w-12 rounded-full bg-gray-800 hover:bg-gray-700 ${social.color} transform transition-all duration-300 hover:scale-110`}
                 >
-                  <social.icon className="w-5 h-5" />
+                  <social.icon className="h-5 w-5" />
                 </Button>
               ))}
             </div>
           </div>
 
           {/* App download section */}
-          <div className="text-center animate-scale-in delay-300">
-            <h3 className="text-2xl font-bold mb-6">Download Soon</h3>
+          <div className="animate-scale-in text-center delay-300">
+            <h3 className="mb-6 text-2xl font-bold">Download Soon</h3>
 
             <div className="space-y-4">
               {/* App Store button */}
-              <div className="bg-gray-800 rounded-xl p-4 hover:bg-gray-700 transition-all duration-300 cursor-pointer transform hover:scale-105">
+              <div className="transform cursor-pointer rounded-xl bg-gray-800 p-4 transition-all duration-300 hover:scale-105 hover:bg-gray-700">
                 <div className="flex items-center gap-3">
-                  <Smartphone className="w-8 h-8 text-gray-400" />
+                  <Smartphone className="h-8 w-8 text-gray-400" />
                   <div className="text-left">
                     <div className="text-xs text-gray-400">Coming to</div>
                     <div className="font-semibold">App Store</div>
@@ -88,9 +88,9 @@ const FooterSection = () => {
               </div>
 
               {/* Google Play button */}
-              <div className="bg-gray-800 rounded-xl p-4 hover:bg-gray-700 transition-all duration-300 cursor-pointer transform hover:scale-105">
+              <div className="transform cursor-pointer rounded-xl bg-gray-800 p-4 transition-all duration-300 hover:scale-105 hover:bg-gray-700">
                 <div className="flex items-center gap-3">
-                  <Smartphone className="w-8 h-8 text-gray-400" />
+                  <Smartphone className="h-8 w-8 text-gray-400" />
                   <div className="text-left">
                     <div className="text-xs text-gray-400">Coming to</div>
                     <div className="font-semibold">Google Play</div>
@@ -101,8 +101,8 @@ const FooterSection = () => {
           </div>
 
           {/* Contact section */}
-          <div className="text-center lg:text-right animate-fade-in delay-500">
-            <h3 className="text-2xl font-bold mb-6">Stay Connected</h3>
+          <div className="animate-fade-in text-center delay-500 lg:text-right">
+            <h3 className="mb-6 text-2xl font-bold">Stay Connected</h3>
 
             <div className="space-y-4 text-gray-300">
               <p>
@@ -119,7 +119,7 @@ const FooterSection = () => {
             <div className="mt-8">
               <Button
                 onClick={scrollToSignup}
-                className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-6 rounded-full font-semibold transform hover:scale-105 transition-all duration-300"
+                className="transform rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-8 py-6 font-semibold text-white transition-all duration-300 hover:scale-105 hover:from-orange-600 hover:to-red-600"
               >
                 Get Notified
               </Button>
@@ -128,7 +128,7 @@ const FooterSection = () => {
         </div>
 
         {/* Bottom section */}
-        <div className="mt-16 pt-8 border-t border-gray-800 text-center text-gray-400">
+        <div className="mt-16 border-t border-gray-800 pt-8 text-center text-gray-400">
           <p>
             &copy; 2025 Daily Food. All rights reserved. Made with ❤️ for food
             lovers.
@@ -136,7 +136,7 @@ const FooterSection = () => {
         </div>
       </div>
     </footer>
-  );
-};
+  )
+}
 
-export default FooterSection;
+export default FooterSection
