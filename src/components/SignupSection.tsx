@@ -23,7 +23,7 @@ const SignupSection = () => {
     startTransition(async () => {
       try {
         const response = await fetch(
-          "https://api.general.abincii.online/api/v1/waitlist/join",
+          "https://api.general.dailyfood.app/api/v1/waitlist/join",
           {
             method: "POST",
             headers: {
