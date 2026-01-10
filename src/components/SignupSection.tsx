@@ -23,7 +23,7 @@ const SignupSection = () => {
     startTransition(async () => {
       try {
         const response = await fetch(
-          "https://api.general.dailyfood.app/api/v1/waitlist/join",
+          "https://api.admin.dailyfood.app/api/v1/waitlist/join",
           {
             method: "POST",
             headers: {
@@ -32,7 +32,7 @@ const SignupSection = () => {
             body: JSON.stringify({
               name: whatsapp,
               email,
-              referralSource: "Waitlist Form",
+              referral_source: "Waitlist Form",
             }),
           }
         );
