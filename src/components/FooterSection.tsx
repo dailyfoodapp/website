@@ -129,9 +129,15 @@ const FooterSection = () => {
 
         {/* Bottom section */}
         <div className="mt-16 border-t border-gray-800 pt-8 text-center text-gray-400">
-          <p>
+          <p className="mb-2">
             &copy; 2025 Daily Food. All rights reserved. Made with ❤️ for food
             lovers.
+          </p>
+          <p className="text-sm">
+          Owned by{' '}
+            <span className="text-orange-400 font-semibold">
+              Macrade Digital Services Ltd
+            </span>
           </p>
         </div>
       </div>
