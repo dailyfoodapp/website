@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Instagram, Music2, Facebook, Smartphone } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import Logo from '@/assets/logo-footer.png'
 
 const FooterSection = () => {
@@ -128,12 +129,35 @@ const FooterSection = () => {
         </div>
 
         {/* Bottom section */}
-        <div className="mt-16 border-t border-gray-800 pt-8 text-center text-gray-400">
-          <p className="mb-2">
+        <div className="mt-16 border-t border-gray-800 pt-8">
+          <div className="flex flex-wrap justify-center gap-6 mb-6 text-sm">
+            <Link
+              to="/legal"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="!text-gray-400 hover:text-white transition-colors"
+            >
+              Legal
+            </Link>
+            <Link
+              to="/help"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="!text-gray-400 hover:text-white transition-colors"
+            >
+              Help Center
+            </Link>
+            <Link
+              to="/contact"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="!text-gray-400 hover:text-white transition-colors"
+            >
+              Contact
+            </Link>
+          </div>
+          <p className="text-center text-gray-400 mb-2">
             &copy; 2025 Daily Food. All rights reserved. Made with ❤️ for food
             lovers.
           </p>
-          <p className="text-sm">
+          <p className="text-sm text-center text-gray-400">
           Owned by{' '}
             <span className="text-orange-400 font-semibold">
               Macrade Digital Services Ltd
