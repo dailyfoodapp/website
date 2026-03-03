@@ -33,7 +33,7 @@ Phone: ${formData.phone || 'Not provided'}
 Message:
 ${formData.message}`;
 
-    const mailtoLink = `mailto:appdailyfood@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(emailBody)}`;
+    const mailtoLink = `mailto:support@dailyfood.app?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(emailBody)}`;
 
     // Open email client
     window.location.href = mailtoLink;
@@ -90,10 +90,10 @@ ${formData.message}`;
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
                     <a
-                      href="mailto:appdailyfood@gmail.com"
+                      href="mailto:support@dailyfood.app"
                       className="text-orange-600 hover:text-orange-700 text-sm transition-colors"
                     >
-                      appdailyfood@gmail.com
+                      support@dailyfood.app
                     </a>
                   </div>
                 </div>
@@ -294,7 +294,7 @@ ${formData.message}`;
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">Live Chat</h3>
               <p className="text-gray-600 text-sm">
-                Get instant answers from our support team through the DailyFoods app.
+                Get instant answers from our support team through the DailyFood app.
               </p>
             </div>
 
@@ -314,7 +314,7 @@ ${formData.message}`;
               </div>
               <h3 className="font-semibold text-gray-900 mb-2">Email Support</h3>
               <p className="text-gray-600 text-sm">
-                Send us detailed inquiries at appdailyfood@gmail.com
+                Send us detailed inquiries at support@dailyfood.app
               </p>
             </div>
           </div>

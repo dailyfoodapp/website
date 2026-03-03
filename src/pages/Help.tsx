@@ -14,11 +14,11 @@ export default function Help() {
       icon: HelpCircle,
       questions: [
         {
-          q: "How do I create an account on DailyFoods?",
-          a: "Simply download the DailyFoods app, click on 'Sign Up', and follow the registration process. You can sign up using your email or phone number."
+          q: "How do I create an account on DailyFood?",
+          a: "Simply download the DailyFood app, click on 'Sign Up', and follow the registration process. You can sign up using your email or phone number."
         },
         {
-          q: "Is DailyFoods available in my area?",
+          q: "Is DailyFood available in my area?",
           a: "We're constantly expanding our service areas. Enter your delivery address in the app to check if we deliver to your location."
         },
         {
@@ -33,7 +33,7 @@ export default function Help() {
       questions: [
         {
           q: "What are your delivery hours?",
-          a: "DailyFoods delivers daily from 7:00 AM to 10:00 PM. You can schedule orders in advance or order for immediate delivery during these hours."
+          a: "DailyFood delivers daily from 7:00 AM to 10:00 PM. You can schedule orders in advance or order for immediate delivery during these hours."
         },
         {
           q: "How long does delivery take?",
@@ -45,7 +45,7 @@ export default function Help() {
         },
         {
           q: "What if my order is incorrect or missing items?",
-          a: "Contact us immediately through the app or email us at appdailyfood@gmail.com. We'll resolve the issue and ensure you get what you ordered."
+          a: "Contact us immediately through the app or email us at support@dailyfood.app. We'll resolve the issue and ensure you get what you ordered."
         }
       ]
     },
@@ -63,7 +63,7 @@ export default function Help() {
         },
         {
           q: "How do refunds work?",
-          a: "Refunds are processed within 5-7 business days to your original payment method. For cash orders, refunds are issued as credit to your DailyFoods wallet."
+          a: "Refunds are processed within 5-7 business days to your original payment method. For cash orders, refunds are issued as credit to your DailyFood wallet."
         }
       ]
     },
@@ -81,7 +81,7 @@ export default function Help() {
         },
         {
           q: "How do I delete my account?",
-          a: "Contact our support team at appdailyfood@gmail.com to request account deletion. We'll process your request within 24-48 hours."
+          a: "Contact our support team at support@dailyfood.app to request account deletion. We'll process your request within 24-48 hours."
         }
       ]
     }
@@ -137,10 +137,10 @@ export default function Help() {
               Get help via email
             </p>
             <a
-              href="mailto:appdailyfood@gmail.com"
+              href="mailto:support@dailyfood.app"
               className="text-orange-600 hover:text-orange-700 font-medium text-sm transition-colors"
             >
-              appdailyfood@gmail.com
+              support@dailyfood.app
             </a>
           </div>
 
@@ -230,7 +230,7 @@ export default function Help() {
             Our support team is here to assist you
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="mailto:appdailyfood@gmail.com">
+            <a href="mailto:support@dailyfood.app">
               <Button
                 size="lg"
                 variant="secondary"

@@ -16,7 +16,7 @@ export default function PageHeader() {
             onClick={handleNavClick}
             className="flex items-center gap-2 !no-underline"
           >
-            <img src={Logo} alt="DailyFoods Logo" className="h-8 md:h-10 w-auto" />
+            <img src={Logo} alt="DailyFood Logo" className="h-8 md:h-10 w-auto" />
           </Link>
 
           {/* Navigation Links */}

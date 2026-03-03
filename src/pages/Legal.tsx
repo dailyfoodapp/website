@@ -27,21 +27,21 @@ export default function Legal() {
             </h2>
             <div className="space-y-4 text-gray-700 text-sm md:text-base leading-relaxed">
               <p>
-                Welcome to DailyFoods! By accessing or using our service, you agree to be bound by these Terms of Service.
+                Welcome to DailyFood! By accessing or using our service, you agree to be bound by these Terms of Service.
               </p>
 
               <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">
                 1. Acceptance of Terms
               </h3>
               <p>
-                By accessing and using DailyFoods, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to these terms, please do not use our service.
+                By accessing and using DailyFood, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to these terms, please do not use our service.
               </p>
 
               <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">
                 2. Use of Service
               </h3>
               <p>
-                DailyFoods provides a platform for food discovery and delivery services. You agree to use the service only for lawful purposes and in accordance with these Terms.
+                DailyFood provides a platform for food discovery and delivery services. You agree to use the service only for lawful purposes and in accordance with these Terms.
               </p>
 
               <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">
@@ -55,14 +55,14 @@ export default function Legal() {
                 4. Intellectual Property
               </h3>
               <p>
-                All content, features, and functionality of DailyFoods are owned by us and are protected by international copyright, trademark, and other intellectual property laws.
+                All content, features, and functionality of DailyFood are owned by us and are protected by international copyright, trademark, and other intellectual property laws.
               </p>
 
               <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">
                 5. Limitation of Liability
               </h3>
               <p>
-                DailyFoods shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use or inability to use the service.
+                DailyFood shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use or inability to use the service.
               </p>
             </div>
           </section>
@@ -74,7 +74,7 @@ export default function Legal() {
             </h2>
             <div className="space-y-4 text-gray-700 text-sm md:text-base leading-relaxed">
               <p>
-                At DailyFoods, we take your privacy seriously. This Privacy Policy describes how we collect, use, and protect your personal information.
+                At DailyFood, we take your privacy seriously. This Privacy Policy describes how we collect, use, and protect your personal information.
               </p>
 
               <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">
@@ -121,7 +121,7 @@ export default function Legal() {
             </h2>
             <div className="space-y-4 text-gray-700 text-sm md:text-base leading-relaxed">
               <p>
-                DailyFoods uses cookies and similar technologies to enhance your experience on our platform.
+                DailyFood uses cookies and similar technologies to enhance your experience on our platform.
               </p>
 
               <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">
@@ -159,11 +159,11 @@ export default function Legal() {
               If you have any questions about these legal terms, please contact us:
             </p>
             <a
-              href="mailto:appdailyfood@gmail.com"
+              href="mailto:support@dailyfood.app"
               className="inline-flex items-center gap-2 text-orange-600 hover:text-orange-700 font-medium text-sm md:text-base transition-colors"
             >
               <Mail className="w-5 h-5" />
-              appdailyfood@gmail.com
+              support@dailyfood.app
             </a>
           </section>
         </div>
