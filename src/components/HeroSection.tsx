@@ -5,15 +5,7 @@ import LogoText from '@/assets/logo.png'
 import LogoIcon from '@/assets/logo-image.png'
 
 const HeroSection = () => {
-  const scrollToSignup = () => {
-    const signupSection = document.getElementById('signup-form')
-    if (signupSection) {
-      signupSection.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      })
-    }
-  }
+
 
   const scrollToHowItWorks = () => {
     const howItWorksSection = document.getElementById('how-it-works')
@@ -59,13 +51,27 @@ const HeroSection = () => {
             on food and grocery shopping with our innovative food service.
           </p>
 
-          <div className="flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
-            <Button
-              onClick={scrollToSignup}
-              className="transform rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-8 py-6 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:from-orange-600 hover:to-red-600"
-            >
-              Notify Me
-            </Button>
+          <div className='flex flex-col gap-4'>
+
+            <div className="flex flex-col md:flex-row justify-center gap-4 lg:justify-start">
+              <a
+                href="https://apps.apple.com/ng/app/dailyfoodapp/id6759449112"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transform rounded-full text-sm md:text-base bg-gradient-to-r from-orange-500 to-red-500 px-8 py-6 font-semibold flex-1 !text-white shadow-lg text-center transition-all duration-300 hover:scale-105 hover:from-orange-600 hover:to-red-600"
+              >
+                Download on App Store
+              </a>
+              <a
+                href="https://play.google.com/store/apps/details?id=com.dailyfoodapp.customer&hl=en"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transform rounded-full text-sm md:text-base bg-gradient-to-r from-orange-500 to-red-500 px-8 py-6 font-semibold flex-1 !text-white shadow-lg text-center transition-all duration-300 hover:scale-105 hover:from-orange-600 hover:to-red-600"
+              >
+                Get it on Google Play
+              </a>
+            </div>
+
             <Button
               onClick={scrollToHowItWorks}
               variant="outline"

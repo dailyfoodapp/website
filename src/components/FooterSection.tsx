@@ -4,16 +4,6 @@ import { Link } from 'react-router-dom'
 import Logo from '@/assets/logo-footer.png'
 
 const FooterSection = () => {
-  const scrollToSignup = () => {
-    const signupSection = document.getElementById('signup-form')
-    if (signupSection) {
-      signupSection.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      })
-    }
-  }
-
   const socialLinks = [
     {
       icon: Instagram,
@@ -74,30 +64,40 @@ const FooterSection = () => {
 
           {/* App download section */}
           <div className="animate-scale-in text-center delay-300">
-            <h3 className="mb-6 text-2xl font-bold">Download Soon</h3>
+            <h3 className="mb-6 text-2xl font-bold">Download Now</h3>
 
             <div className="space-y-4">
               {/* App Store button */}
-              <div className="transform cursor-pointer rounded-xl bg-gray-800 p-4 transition-all duration-300 hover:scale-105 hover:bg-gray-700">
+              <a
+                href="https://apps.apple.com/ng/app/dailyfoodapp/id6759449112"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block transform cursor-pointer rounded-xl bg-gray-800 p-4 transition-all duration-300 hover:scale-105 hover:bg-gray-700"
+              >
                 <div className="flex items-center gap-3">
                   <Smartphone className="h-8 w-8 text-gray-400" />
                   <div className="text-left">
-                    <div className="text-xs text-gray-400">Coming to</div>
+                    <div className="text-xs text-gray-400">Download on</div>
                     <div className="font-semibold">App Store</div>
                   </div>
                 </div>
-              </div>
+              </a>
 
               {/* Google Play button */}
-              <div className="transform cursor-pointer rounded-xl bg-gray-800 p-4 transition-all duration-300 hover:scale-105 hover:bg-gray-700">
+              <a
+                href="https://play.google.com/store/apps/details?id=com.dailyfoodapp.customer&hl=en"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block transform cursor-pointer rounded-xl bg-gray-800 p-4 transition-all duration-300 hover:scale-105 hover:bg-gray-700"
+              >
                 <div className="flex items-center gap-3">
                   <Smartphone className="h-8 w-8 text-gray-400" />
                   <div className="text-left">
-                    <div className="text-xs text-gray-400">Coming to</div>
+                    <div className="text-xs text-gray-400">Get it on</div>
                     <div className="font-semibold">Google Play</div>
                   </div>
                 </div>
-              </div>
+              </a>
             </div>
           </div>
 
@@ -110,21 +110,14 @@ const FooterSection = () => {
                 <span className="text-orange-500">📧</span> info@dailyfood.app
               </p>
               <p>
-                <span className="text-orange-500">📱</span> Coming Soon
+                <span className="text-orange-500">📱</span> Available Now
               </p>
               <p>
                 <span className="text-orange-500">🌍</span> Launching Globally
               </p>
             </div>
 
-            <div className="mt-8">
-              <Button
-                onClick={scrollToSignup}
-                className="transform rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-8 py-6 font-semibold text-white transition-all duration-300 hover:scale-105 hover:from-orange-600 hover:to-red-600"
-              >
-                Get Notified
-              </Button>
-            </div>
+
           </div>
         </div>
 
@@ -158,7 +151,7 @@ const FooterSection = () => {
             lovers.
           </p>
           <p className="text-sm text-center text-gray-400">
-          Owned by{' '}
+            Owned by{' '}
             <span className="text-orange-400 font-semibold">
               Macrade Digital Services Ltd
             </span>
