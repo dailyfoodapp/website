@@ -145,6 +145,13 @@ const FooterSection = () => {
             >
               Contact
             </Link>
+            <Link
+              to="/delete-account"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="!text-gray-400 hover:text-white transition-colors"
+            >
+              Delete Account
+            </Link>
           </div>
           <p className="text-center text-gray-400 mb-2">
             &copy; 2025 Daily Food. All rights reserved. Made with ❤️ for food

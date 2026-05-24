@@ -5,6 +5,7 @@ import Index from './pages/Index'
 import Legal from './pages/Legal'
 import Help from './pages/Help'
 import Contact from './pages/Contact'
+import DeleteAccount from './pages/DeleteAccount'
 import NotFound from './pages/NotFound'
 
 const App = () => (
@@ -16,6 +17,7 @@ const App = () => (
         <Route path="/legal" element={<Legal />} />
         <Route path="/help" element={<Help />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/delete-account" element={<DeleteAccount />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
