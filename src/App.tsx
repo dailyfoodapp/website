@@ -7,6 +7,7 @@ import Help from './pages/Help'
 import Contact from './pages/Contact'
 import DeleteAccount from './pages/DeleteAccount'
 import NotFound from './pages/NotFound'
+import UnilagGroupFoodBuying from './pages/UnilagGroupFoodBuying'
 
 const App = () => (
   <TooltipProvider>
@@ -18,6 +19,10 @@ const App = () => (
         <Route path="/help" element={<Help />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/delete-account" element={<DeleteAccount />} />
+        <Route
+          path="/unilag-group-food-buying"
+          element={<UnilagGroupFoodBuying />}
+        />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>

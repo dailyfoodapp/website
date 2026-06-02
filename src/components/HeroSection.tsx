@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Smartphone } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import Logo from '@/assets/logo-color.png'
 import LogoText from '@/assets/logo.png'
 import LogoIcon from '@/assets/logo-image.png'
@@ -71,6 +72,22 @@ const HeroSection = () => {
                 Get it on Google Play
               </a>
             </div>
+
+            <Link
+              to="/unilag-group-food-buying"
+              className="rounded-3xl border border-orange-200 bg-white/90 px-6 py-5 text-left shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-orange-300 hover:bg-white"
+            >
+              <span className="block text-sm font-semibold uppercase tracking-[0.2em] text-orange-500">
+                For Students
+              </span>
+              <span className="mt-2 block text-xl font-bold text-gray-900">
+                Join the Unilag group food buying form
+              </span>
+              <span className="mt-2 block text-sm leading-relaxed text-gray-600">
+                Start here, prepare your answers, and continue to the official
+                signup form with your details prefilled.
+              </span>
+            </Link>
 
             <Button
               onClick={scrollToHowItWorks}
