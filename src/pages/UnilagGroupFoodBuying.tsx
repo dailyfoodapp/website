@@ -45,7 +45,7 @@ const PAYMENT_DETAILS = {
 }
 
 const ORDER_CUTOFF_NOTE =
-  'Place your order before 1:00 PM daily to receive your food the next day morning.'
+  'Place your order before 1:00 PM daily to receive your food the next weekday morning.'
 
 type Weekday =
   | 'Monday'
@@ -72,8 +72,18 @@ const dailyMealAvailability: Partial<Record<Weekday, DailyMealAvailability>> = {
 }
 
 const noMealAvailability: DailyMealAvailability = {
-  foods: 'No meals scheduled for today',
+  foods: 'No meals scheduled for the next delivery day',
   categories: [],
+}
+
+const nextWeekdayByCurrentDay: Record<Weekday, Weekday> = {
+  Monday: 'Tuesday',
+  Tuesday: 'Wednesday',
+  Wednesday: 'Thursday',
+  Thursday: 'Friday',
+  Friday: 'Monday',
+  Saturday: 'Monday',
+  Sunday: 'Monday',
 }
 
 const getLagosWeekday = (): Weekday =>
@@ -81,6 +91,9 @@ const getLagosWeekday = (): Weekday =>
     weekday: 'long',
     timeZone: 'Africa/Lagos',
   }).format(new Date()) as Weekday
+
+const getNextDeliveryWeekday = (weekday: Weekday): Weekday =>
+  nextWeekdayByCurrentDay[weekday]
 
 type MenuItem = {
   id: string
@@ -183,14 +196,15 @@ export default function UnilagGroupFoodBuying() {
   const hiddenFormRef = useRef<HTMLFormElement | null>(null)
   const hasPostedRef = useRef(false)
 
-  const todayMealAvailability =
-    dailyMealAvailability[currentWeekday] ?? noMealAvailability
+  const deliveryWeekday = getNextDeliveryWeekday(currentWeekday)
+  const deliveryMealAvailability =
+    dailyMealAvailability[deliveryWeekday] ?? noMealAvailability
   const availableMenu = useMemo(
     () =>
       menu.filter((item) =>
-        todayMealAvailability.categories.includes(item.category),
+        deliveryMealAvailability.categories.includes(item.category),
       ),
-    [todayMealAvailability.categories],
+    [deliveryMealAvailability.categories],
   )
   const availableMealIds = useMemo(
     () => new Set(availableMenu.map((item) => item.id)),
@@ -334,7 +348,7 @@ export default function UnilagGroupFoodBuying() {
 
   const validateStep1 = () => {
     if (availableMenu.length === 0) {
-      toast.error('No meals available today', {
+      toast.error('No meals available for the next delivery day', {
         description: 'Please check back on the next ordering day.',
       })
       return false
@@ -342,7 +356,7 @@ export default function UnilagGroupFoodBuying() {
 
     if (formData.meals.length === 0) {
       toast.error('Select a meal', {
-        description: "Pick at least one of today's meals to continue.",
+        description: 'Pick at least one meal for the next delivery day to continue.',
       })
       return false
     }
@@ -687,8 +701,9 @@ export default function UnilagGroupFoodBuying() {
                         Step 1 — Select your food
                       </h2>
                       <p className="mt-2 text-gray-600">
-                        Today is {currentWeekday}. Tap one or more meals available
-                        today. The total updates automatically and you will pay it in
+                        Today is {currentWeekday}, so ordering is open for{' '}
+                        {deliveryWeekday}. Tap one or more meals for that delivery
+                        day. The total updates automatically and you will pay it in
                         the next step.
                       </p>
                     </div>
@@ -700,7 +715,7 @@ export default function UnilagGroupFoodBuying() {
                         </span>
                         <div>
                           <h3 className="font-bold text-gray-900">
-                            Today's meals
+                            Next delivery meals
                           </h3>
                           <p className="mt-1 text-sm leading-relaxed text-gray-600">
                             {ORDER_CUTOFF_NOTE}
@@ -710,10 +725,10 @@ export default function UnilagGroupFoodBuying() {
 
                       <div className="grid gap-1 bg-white/70 px-5 py-4 sm:grid-cols-[8rem_1fr] sm:gap-4">
                         <p className="text-sm font-semibold uppercase tracking-wide text-orange-700">
-                          {currentWeekday}
+                          {deliveryWeekday}
                         </p>
                         <p className="font-semibold text-gray-900">
-                          {todayMealAvailability.foods}
+                          {deliveryMealAvailability.foods}
                         </p>
                       </div>
                     </div>
@@ -722,7 +737,7 @@ export default function UnilagGroupFoodBuying() {
                       {availableMenu.length === 0 ? (
                         <div className="rounded-2xl border border-gray-200 bg-gray-50 px-5 py-6 text-center">
                           <p className="font-semibold text-gray-900">
-                            No meals are available today.
+                            No meals are available for the next delivery day.
                           </p>
                           <p className="mt-1 text-sm text-gray-600">
                             Please check back on the next ordering day.
@@ -853,7 +868,7 @@ export default function UnilagGroupFoodBuying() {
                       >
                         <span className="inline-flex items-center gap-2">
                           {availableMenu.length === 0
-                            ? 'No meals available today'
+                            ? 'No meals available'
                             : 'Continue to payment'}
                           {availableMenu.length > 0 ? (
                             <ArrowRight className="h-5 w-5" />
@@ -1219,11 +1234,12 @@ export default function UnilagGroupFoodBuying() {
                       <p>{ORDER_CUTOFF_NOTE}</p>
                       {availableMenu.length > 0 ? (
                         <p>
-                          Today is {currentWeekday}, so the available meals are{' '}
-                          {todayMealAvailability.foods.toLowerCase()}.
+                          Today is {currentWeekday}, so the {deliveryWeekday} meals
+                          available to order are{' '}
+                          {deliveryMealAvailability.foods.toLowerCase()}.
                         </p>
                       ) : (
-                        <p>No meals are scheduled for {currentWeekday}.</p>
+                        <p>No meals are scheduled for {deliveryWeekday}.</p>
                       )}
                       <p>If you pick Egusi, choose Eba or Fufu and a protein (Beef, Chicken or Fish).</p>
                       <p>Your total is calculated for you and shown at the bottom.</p>
@@ -1249,7 +1265,7 @@ export default function UnilagGroupFoodBuying() {
                 <div className="mt-6 space-y-4">
                   <div className="flex items-center gap-3 rounded-2xl bg-orange-50 px-4 py-3">
                     <Sandwich className="h-5 w-5 text-orange-600" />
-                    <span className="font-medium text-gray-700">Choose from today's meals</span>
+                    <span className="font-medium text-gray-700">Choose the next weekday's meals</span>
                   </div>
                   <div className="flex items-center gap-3 rounded-2xl bg-red-50 px-4 py-3">
                     <Banknote className="h-5 w-5 text-red-600" />
