@@ -1,10 +1,12 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import {
   ArrowLeft,
   ArrowRight,
   Banknote,
+  CalendarDays,
   Check,
+  Clock,
   Copy,
   Info,
   LoaderCircle,
@@ -42,18 +44,57 @@ const PAYMENT_DETAILS = {
   accountName: 'Macrade Digital Services LTD',
 }
 
+const ORDER_CUTOFF_NOTE =
+  'Place your order before 1:00 PM daily to receive your food the next day morning.'
+
+type Weekday =
+  | 'Monday'
+  | 'Tuesday'
+  | 'Wednesday'
+  | 'Thursday'
+  | 'Friday'
+  | 'Saturday'
+  | 'Sunday'
+
+type MealCategory = 'rice' | 'beans' | 'swallow'
+
+type DailyMealAvailability = {
+  foods: string
+  categories: MealCategory[]
+}
+
+const dailyMealAvailability: Partial<Record<Weekday, DailyMealAvailability>> = {
+  Monday: { foods: 'Rice and swallow', categories: ['rice', 'swallow'] },
+  Tuesday: { foods: 'Rice and swallow', categories: ['rice', 'swallow'] },
+  Wednesday: { foods: 'Rice and beans', categories: ['rice', 'beans'] },
+  Thursday: { foods: 'Rice and beans', categories: ['rice', 'beans'] },
+  Friday: { foods: 'Swallow and beans', categories: ['swallow', 'beans'] },
+}
+
+const noMealAvailability: DailyMealAvailability = {
+  foods: 'No meals scheduled for today',
+  categories: [],
+}
+
+const getLagosWeekday = (): Weekday =>
+  new Intl.DateTimeFormat('en-US', {
+    weekday: 'long',
+    timeZone: 'Africa/Lagos',
+  }).format(new Date()) as Weekday
+
 type MenuItem = {
   id: string
   name: string
   price: number
+  category: MealCategory
   hasExtras?: boolean
 }
 
 const menu: MenuItem[] = [
-  { id: 'jollof', name: 'Party Jollof Rice & Egg', price: 1600 },
-  { id: 'beans-potato', name: 'Beans & Potato', price: 1200 },
-  { id: 'beans-bread', name: 'Beans & Bread', price: 1400 },
-  { id: 'egusi', name: 'Egusi', price: 1700, hasExtras: true },
+  { id: 'jollof', name: 'Party Jollof Rice & Egg', price: 1600, category: 'rice' },
+  { id: 'beans-potato', name: 'Beans & Potato', price: 1200, category: 'beans' },
+  { id: 'beans-bread', name: 'Beans & Bread', price: 1400, category: 'beans' },
+  { id: 'egusi', name: 'Egusi', price: 1700, category: 'swallow', hasExtras: true },
 ]
 
 const swallowOptions = ['Eba', 'Fufu']
@@ -137,9 +178,49 @@ export default function UnilagGroupFoodBuying() {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [currentWeekday, setCurrentWeekday] = useState<Weekday>(getLagosWeekday)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const hiddenFormRef = useRef<HTMLFormElement | null>(null)
   const hasPostedRef = useRef(false)
+
+  const todayMealAvailability =
+    dailyMealAvailability[currentWeekday] ?? noMealAvailability
+  const availableMenu = useMemo(
+    () =>
+      menu.filter((item) =>
+        todayMealAvailability.categories.includes(item.category),
+      ),
+    [todayMealAvailability.categories],
+  )
+  const availableMealIds = useMemo(
+    () => new Set(availableMenu.map((item) => item.id)),
+    [availableMenu],
+  )
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setCurrentWeekday(getLagosWeekday())
+    }, 60 * 1000)
+
+    return () => window.clearInterval(interval)
+  }, [])
+
+  useEffect(() => {
+    setFormData((current) => {
+      const meals = current.meals.filter((id) => availableMealIds.has(id))
+
+      if (meals.length === current.meals.length) {
+        return current
+      }
+
+      return {
+        ...current,
+        meals,
+        egusiSwallow: meals.includes('egusi') ? current.egusiSwallow : '',
+        egusiProtein: meals.includes('egusi') ? current.egusiProtein : '',
+      }
+    })
+  }, [availableMealIds])
 
   // Autosave the whole flow (step + answers + receipt) so a clumsy refresh or
   // reload never loses progress and everything can be retrieved.
@@ -179,6 +260,10 @@ export default function UnilagGroupFoodBuying() {
     }
 
   const handleMealToggle = (id: string) => {
+    if (!availableMealIds.has(id)) {
+      return
+    }
+
     setFormData((current) => {
       const selected = current.meals.includes(id)
       const meals = selected
@@ -248,9 +333,16 @@ export default function UnilagGroupFoodBuying() {
   }
 
   const validateStep1 = () => {
+    if (availableMenu.length === 0) {
+      toast.error('No meals available today', {
+        description: 'Please check back on the next ordering day.',
+      })
+      return false
+    }
+
     if (formData.meals.length === 0) {
       toast.error('Select a meal', {
-        description: 'Pick at least one meal from the menu to continue.',
+        description: "Pick at least one of today's meals to continue.",
       })
       return false
     }
@@ -430,7 +522,7 @@ export default function UnilagGroupFoodBuying() {
           <div className="mx-auto max-w-4xl text-center">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/15 px-5 py-2 text-sm font-semibold backdrop-blur-sm">
               <Sandwich className="h-4 w-4" />
-              <span>Unilag Students Signup Form for Dailyfoodapp Group Food Buying</span>
+              <span>Ordering is now open for Unilag students</span>
             </div>
 
             <h1 className="mb-4 text-4xl font-bold leading-tight md:text-5xl">
@@ -440,6 +532,10 @@ export default function UnilagGroupFoodBuying() {
               Choose your meal, pay and upload your receipt, then complete your
               details. Your progress is saved automatically as you go.
             </p>
+            <div className="mx-auto mt-6 inline-flex max-w-3xl items-center gap-3 rounded-2xl bg-white/15 px-5 py-4 text-left text-sm font-semibold text-white shadow-lg backdrop-blur-sm sm:text-base">
+              <Clock className="h-5 w-5 shrink-0" />
+              <span>{ORDER_CUTOFF_NOTE}</span>
+            </div>
           </div>
         </div>
       </section>
@@ -591,13 +687,50 @@ export default function UnilagGroupFoodBuying() {
                         Step 1 — Select your food
                       </h2>
                       <p className="mt-2 text-gray-600">
-                        Tap one or more meals from the menu below. The total updates
-                        automatically and you will pay it in the next step.
+                        Today is {currentWeekday}. Tap one or more meals available
+                        today. The total updates automatically and you will pay it in
+                        the next step.
                       </p>
                     </div>
 
+                    <div className="overflow-hidden rounded-2xl border border-orange-100 bg-orange-50/50">
+                      <div className="flex items-start gap-3 border-b border-orange-100 bg-white px-5 py-4">
+                        <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-orange-600">
+                          <CalendarDays className="h-5 w-5" />
+                        </span>
+                        <div>
+                          <h3 className="font-bold text-gray-900">
+                            Today's meals
+                          </h3>
+                          <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                            {ORDER_CUTOFF_NOTE}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="grid gap-1 bg-white/70 px-5 py-4 sm:grid-cols-[8rem_1fr] sm:gap-4">
+                        <p className="text-sm font-semibold uppercase tracking-wide text-orange-700">
+                          {currentWeekday}
+                        </p>
+                        <p className="font-semibold text-gray-900">
+                          {todayMealAvailability.foods}
+                        </p>
+                      </div>
+                    </div>
+
                     <div className="grid gap-3">
-                      {menu.map((item) => {
+                      {availableMenu.length === 0 ? (
+                        <div className="rounded-2xl border border-gray-200 bg-gray-50 px-5 py-6 text-center">
+                          <p className="font-semibold text-gray-900">
+                            No meals are available today.
+                          </p>
+                          <p className="mt-1 text-sm text-gray-600">
+                            Please check back on the next ordering day.
+                          </p>
+                        </div>
+                      ) : null}
+
+                      {availableMenu.map((item) => {
                         const selected = formData.meals.includes(item.id)
 
                         return (
@@ -715,11 +848,16 @@ export default function UnilagGroupFoodBuying() {
                       <Button
                         type="button"
                         onClick={handleNext}
+                        disabled={availableMenu.length === 0}
                         className="h-14 w-full rounded-full bg-gradient-to-r from-orange-500 via-red-500 to-yellow-500 text-base font-bold text-white shadow-lg transition-all duration-300 hover:scale-[1.01] hover:from-orange-600 hover:via-red-600 hover:to-yellow-600 sm:w-auto sm:px-10"
                       >
                         <span className="inline-flex items-center gap-2">
-                          Continue to payment
-                          <ArrowRight className="h-5 w-5" />
+                          {availableMenu.length === 0
+                            ? 'No meals available today'
+                            : 'Continue to payment'}
+                          {availableMenu.length > 0 ? (
+                            <ArrowRight className="h-5 w-5" />
+                          ) : null}
                         </span>
                       </Button>
                     </div>
@@ -1077,7 +1215,16 @@ export default function UnilagGroupFoodBuying() {
                 <div className="mt-6 space-y-4 text-sm leading-relaxed text-gray-200">
                   {step === 1 ? (
                     <>
-                      <p>Select one or more meals — you can mix and match.</p>
+                      <p>Ordering is now open.</p>
+                      <p>{ORDER_CUTOFF_NOTE}</p>
+                      {availableMenu.length > 0 ? (
+                        <p>
+                          Today is {currentWeekday}, so the available meals are{' '}
+                          {todayMealAvailability.foods.toLowerCase()}.
+                        </p>
+                      ) : (
+                        <p>No meals are scheduled for {currentWeekday}.</p>
+                      )}
                       <p>If you pick Egusi, choose Eba or Fufu and a protein (Beef, Chicken or Fish).</p>
                       <p>Your total is calculated for you and shown at the bottom.</p>
                     </>
@@ -1102,7 +1249,7 @@ export default function UnilagGroupFoodBuying() {
                 <div className="mt-6 space-y-4">
                   <div className="flex items-center gap-3 rounded-2xl bg-orange-50 px-4 py-3">
                     <Sandwich className="h-5 w-5 text-orange-600" />
-                    <span className="font-medium text-gray-700">Choose your meal & extras</span>
+                    <span className="font-medium text-gray-700">Choose from today's meals</span>
                   </div>
                   <div className="flex items-center gap-3 rounded-2xl bg-red-50 px-4 py-3">
                     <Banknote className="h-5 w-5 text-red-600" />

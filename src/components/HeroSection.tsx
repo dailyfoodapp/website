@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { Smartphone } from 'lucide-react'
+import { Clock, Smartphone } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import Logo from '@/assets/logo-color.png'
 import LogoText from '@/assets/logo.png'
@@ -81,11 +81,18 @@ const HeroSection = () => {
                 For Students
               </span>
               <span className="mt-2 block text-xl font-bold text-gray-900">
-                Join the Unilag group food buying form
+                Ordering is now open for Unilag students
               </span>
               <span className="mt-2 block text-sm leading-relaxed text-gray-600">
-                Start here, prepare your answers, and continue to the official
-                signup form with your details prefilled.
+                Join the group food buying form, choose your meal, pay, and
+                submit your details.
+              </span>
+              <span className="mt-4 flex items-start gap-2 rounded-2xl bg-orange-50 px-4 py-3 text-sm font-semibold leading-relaxed text-orange-700">
+                <Clock className="mt-0.5 h-4 w-4 shrink-0" />
+                <span>
+                  Place your order before 1:00 PM daily to receive your food the
+                  next day morning.
+                </span>
               </span>
             </Link>
 
