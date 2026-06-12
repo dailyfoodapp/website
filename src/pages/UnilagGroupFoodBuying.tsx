@@ -4,7 +4,6 @@ import {
   ArrowLeft,
   ArrowRight,
   Banknote,
-  CalendarDays,
   Check,
   Clock,
   Copy,
@@ -706,31 +705,6 @@ export default function UnilagGroupFoodBuying() {
                         day. The total updates automatically and you will pay it in
                         the next step.
                       </p>
-                    </div>
-
-                    <div className="overflow-hidden rounded-2xl border border-orange-100 bg-orange-50/50">
-                      <div className="flex items-start gap-3 border-b border-orange-100 bg-white px-5 py-4">
-                        <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-orange-600">
-                          <CalendarDays className="h-5 w-5" />
-                        </span>
-                        <div>
-                          <h3 className="font-bold text-gray-900">
-                            Next delivery meals
-                          </h3>
-                          <p className="mt-1 text-sm leading-relaxed text-gray-600">
-                            {ORDER_CUTOFF_NOTE}
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="grid gap-1 bg-white/70 px-5 py-4 sm:grid-cols-[8rem_1fr] sm:gap-4">
-                        <p className="text-sm font-semibold uppercase tracking-wide text-orange-700">
-                          {deliveryWeekday}
-                        </p>
-                        <p className="font-semibold text-gray-900">
-                          {deliveryMealAvailability.foods}
-                        </p>
-                      </div>
                     </div>
 
                     <div className="grid gap-3">
