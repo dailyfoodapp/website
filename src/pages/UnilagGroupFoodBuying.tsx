@@ -114,9 +114,9 @@ const proteinOptions = ['Beef', 'Chicken', 'Fish']
 const genderOptions = ['Male', 'Female']
 
 const steps = [
-  { id: 1, label: 'Choose Meal' },
-  { id: 2, label: 'Make Payment' },
-  { id: 3, label: 'Your Details' },
+  { id: 1, label: 'Your Details' },
+  { id: 2, label: 'Choose Meal' },
+  { id: 3, label: 'Make Payment' },
 ]
 
 type ContributionFormData = {
@@ -345,7 +345,46 @@ export default function UnilagGroupFoodBuying() {
     }
   }
 
-  const validateStep1 = () => {
+  const validateDetails = () => {
+    if (!formData.email.trim()) {
+      toast.error('Email is required', {
+        description: 'Add your email before continuing.',
+      })
+      return false
+    }
+
+    if (!formData.fullName.trim()) {
+      toast.error('Full name is required', {
+        description: 'Add your full name before continuing.',
+      })
+      return false
+    }
+
+    if (!formData.gender) {
+      toast.error('Gender is required', {
+        description: 'Select your gender before continuing.',
+      })
+      return false
+    }
+
+    if (!formData.whatsapp.trim()) {
+      toast.error('WhatsApp contact is required', {
+        description: 'Add your WhatsApp contact before continuing.',
+      })
+      return false
+    }
+
+    if (!formData.agentCode.trim()) {
+      toast.error('Agent code is required', {
+        description: 'Add the agent code before continuing.',
+      })
+      return false
+    }
+
+    return true
+  }
+
+  const validateMeal = () => {
     if (availableMenu.length === 0) {
       toast.error('No meals available for the next delivery day', {
         description: 'Please check back on the next ordering day.',
@@ -378,7 +417,7 @@ export default function UnilagGroupFoodBuying() {
     return true
   }
 
-  const validateStep2 = () => {
+  const validatePayment = () => {
     if (!proofImage) {
       toast.error('Upload proof of payment', {
         description: 'Add a screenshot or photo of your transfer receipt.',
@@ -389,48 +428,28 @@ export default function UnilagGroupFoodBuying() {
   }
 
   const handleNext = () => {
-    if (step === 1 && !validateStep1()) return
-    if (step === 2 && !validateStep2()) return
+    if (step === 1 && !validateDetails()) return
+    if (step === 2 && !validateMeal()) return
     goToStep(step + 1)
   }
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleDetailsSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    handleNext()
+  }
 
-    if (!formData.email.trim()) {
-      toast.error('Email is required', {
-        description: 'Add your email before submitting the form.',
-      })
+  const handleSubmit = () => {
+    // Final submission happens on the last (payment) step, so re-check every
+    // earlier step in case the student jumped straight here via the URL.
+    if (!validateDetails()) {
+      goToStep(1)
       return
     }
-
-    if (!formData.fullName.trim()) {
-      toast.error('Full name is required', {
-        description: 'Add your full name before submitting.',
-      })
+    if (!validateMeal()) {
+      goToStep(2)
       return
     }
-
-    if (!formData.gender) {
-      toast.error('Gender is required', {
-        description: 'Select your gender before submitting.',
-      })
-      return
-    }
-
-    if (!formData.whatsapp.trim()) {
-      toast.error('WhatsApp contact is required', {
-        description: 'Add your WhatsApp contact before submitting.',
-      })
-      return
-    }
-
-    if (!formData.agentCode.trim()) {
-      toast.error('Agent code is required', {
-        description: 'Add the agent code before submitting.',
-      })
-      return
-    }
+    if (!validatePayment()) return
 
     hasPostedRef.current = true
     setIsSubmitting(true)
@@ -542,8 +561,8 @@ export default function UnilagGroupFoodBuying() {
               Join the group food buying in 3 simple steps
             </h1>
             <p className="mx-auto max-w-3xl text-lg text-white/90 md:text-xl">
-              Choose your meal, pay and upload your receipt, then complete your
-              details. Your progress is saved automatically as you go.
+              Fill in your details, choose your meal, then pay and upload your
+              receipt. Your progress is saved automatically as you go.
             </p>
             <div className="mx-auto mt-6 inline-flex max-w-3xl items-center gap-3 rounded-2xl bg-white/15 px-5 py-4 text-left text-sm font-semibold text-white shadow-lg backdrop-blur-sm sm:text-base">
               <Clock className="h-5 w-5 shrink-0" />
@@ -692,12 +711,12 @@ export default function UnilagGroupFoodBuying() {
               </div>
 
               <div className="px-5 py-8 sm:px-8">
-                {/* STEP 1 — Choose meal */}
-                {step === 1 ? (
+                {/* STEP 2 — Choose meal */}
+                {step === 2 ? (
                   <div className="space-y-8">
                     <div>
                       <h2 className="text-2xl font-bold text-gray-900">
-                        Step 1 — Select your food
+                        Step 2 — Select your food
                       </h2>
                       <p className="mt-2 text-gray-600">
                         Today is {currentWeekday}, so ordering is open for{' '}
@@ -833,7 +852,7 @@ export default function UnilagGroupFoodBuying() {
                       <span className="text-2xl font-bold">{naira(total)}</span>
                     </div>
 
-                    <div className="flex flex-col gap-3 sm:flex-row-reverse">
+                    <div className="flex flex-col gap-3 sm:flex-row-reverse sm:items-center sm:justify-between">
                       <Button
                         type="button"
                         onClick={handleNext}
@@ -849,20 +868,28 @@ export default function UnilagGroupFoodBuying() {
                           ) : null}
                         </span>
                       </Button>
+                      <button
+                        type="button"
+                        onClick={() => goToStep(1)}
+                        className="inline-flex h-14 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-6 text-base font-semibold text-gray-700 transition-colors hover:border-gray-300"
+                      >
+                        <ArrowLeft className="h-4 w-4" />
+                        Back
+                      </button>
                     </div>
                   </div>
                 ) : null}
 
-                {/* STEP 2 — Make payment */}
-                {step === 2 ? (
+                {/* STEP 3 — Make payment */}
+                {step === 3 ? (
                   <div className="space-y-8">
                     <div>
                       <h2 className="text-2xl font-bold text-gray-900">
-                        Step 2 — Make payment & upload proof
+                        Step 3 — Make payment & upload proof
                       </h2>
                       <p className="mt-2 text-gray-600">
                         Transfer the exact total to the account below, then upload a
-                        screenshot or photo of your receipt.
+                        screenshot or photo of your receipt to finish your signup.
                       </p>
                     </div>
 
@@ -1003,17 +1030,22 @@ export default function UnilagGroupFoodBuying() {
                     <div className="flex flex-col gap-3 sm:flex-row-reverse sm:items-center sm:justify-between">
                       <Button
                         type="button"
-                        onClick={handleNext}
+                        onClick={handleSubmit}
+                        disabled={isSubmitting}
                         className="h-14 w-full rounded-full bg-gradient-to-r from-orange-500 via-red-500 to-yellow-500 text-base font-bold text-white shadow-lg transition-all duration-300 hover:scale-[1.01] hover:from-orange-600 hover:via-red-600 hover:to-yellow-600 sm:w-auto sm:px-10"
                       >
-                        <span className="inline-flex items-center gap-2">
-                          Continue to details
-                          <ArrowRight className="h-5 w-5" />
-                        </span>
+                        {isSubmitting ? (
+                          <span className="inline-flex items-center gap-2">
+                            <LoaderCircle className="h-5 w-5 animate-spin" />
+                            Sending Response...
+                          </span>
+                        ) : (
+                          'Submit Student Response'
+                        )}
                       </Button>
                       <button
                         type="button"
-                        onClick={() => goToStep(1)}
+                        onClick={() => goToStep(2)}
                         className="inline-flex h-14 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-6 text-base font-semibold text-gray-700 transition-colors hover:border-gray-300"
                       >
                         <ArrowLeft className="h-4 w-4" />
@@ -1023,16 +1055,16 @@ export default function UnilagGroupFoodBuying() {
                   </div>
                 ) : null}
 
-                {/* STEP 3 — Complete the form */}
-                {step === 3 ? (
-                  <form onSubmit={handleSubmit} className="space-y-8">
+                {/* STEP 1 — Your details */}
+                {step === 1 ? (
+                  <form onSubmit={handleDetailsSubmit} className="space-y-8">
                     <div>
                       <h2 className="text-2xl font-bold text-gray-900">
-                        Step 3 — Complete your details
+                        Step 1 — Your details
                       </h2>
                       <p className="mt-2 text-gray-600">
-                        Fill in the remaining details exactly as you want them
-                        recorded, then submit your signup.
+                        Fill in your details exactly as you want them recorded.
+                        You will choose your meal and pay in the next steps.
                       </p>
                     </div>
 
@@ -1043,7 +1075,7 @@ export default function UnilagGroupFoodBuying() {
                           <p className="text-sm text-blue-900">
                             We pre-filled your details from your last signup. Please
                             review everything below and update anything that has
-                            changed before submitting.
+                            changed before continuing.
                           </p>
                         </div>
                         <button
@@ -1154,29 +1186,16 @@ export default function UnilagGroupFoodBuying() {
                       </p>
                     </div>
 
-                    <div className="flex flex-col gap-3 sm:flex-row-reverse sm:items-center sm:justify-between">
+                    <div className="flex flex-col gap-3 sm:flex-row-reverse">
                       <Button
                         type="submit"
-                        disabled={isSubmitting}
                         className="h-14 w-full rounded-full bg-gradient-to-r from-orange-500 via-red-500 to-yellow-500 text-base font-bold text-white shadow-lg transition-all duration-300 hover:scale-[1.01] hover:from-orange-600 hover:via-red-600 hover:to-yellow-600 sm:w-auto sm:px-10"
                       >
-                        {isSubmitting ? (
-                          <span className="inline-flex items-center gap-2">
-                            <LoaderCircle className="h-5 w-5 animate-spin" />
-                            Sending Response...
-                          </span>
-                        ) : (
-                          'Submit Student Response'
-                        )}
+                        <span className="inline-flex items-center gap-2">
+                          Continue to meal
+                          <ArrowRight className="h-5 w-5" />
+                        </span>
                       </Button>
-                      <button
-                        type="button"
-                        onClick={() => goToStep(2)}
-                        className="inline-flex h-14 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-6 text-base font-semibold text-gray-700 transition-colors hover:border-gray-300"
-                      >
-                        <ArrowLeft className="h-4 w-4" />
-                        Back
-                      </button>
                     </div>
                   </form>
                 ) : null}
@@ -1187,22 +1206,28 @@ export default function UnilagGroupFoodBuying() {
               <div className="rounded-3xl bg-gray-900 p-6 text-white shadow-2xl sm:p-8">
                 <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10">
                   {step === 1 ? (
-                    <Utensils className="h-7 w-7" />
-                  ) : step === 2 ? (
-                    <Banknote className="h-7 w-7" />
-                  ) : (
                     <UserRound className="h-7 w-7" />
+                  ) : step === 2 ? (
+                    <Utensils className="h-7 w-7" />
+                  ) : (
+                    <Banknote className="h-7 w-7" />
                   )}
                 </div>
                 <h3 className="text-2xl font-bold">
                   {step === 1
-                    ? 'Step 1 · Pick your meal'
+                    ? 'Step 1 · Your details'
                     : step === 2
-                      ? 'Step 2 · Pay & upload'
-                      : 'Step 3 · Your details'}
+                      ? 'Step 2 · Pick your meal'
+                      : 'Step 3 · Pay & upload'}
                 </h3>
                 <div className="mt-6 space-y-4 text-sm leading-relaxed text-gray-200">
                   {step === 1 ? (
+                    <>
+                      <p>Enter your details exactly as you want them recorded.</p>
+                      <p>Confirm your WhatsApp number is active and correct.</p>
+                      <p>Have your agent code ready before continuing.</p>
+                    </>
+                  ) : step === 2 ? (
                     <>
                       <p>Ordering is now open.</p>
                       <p>{ORDER_CUTOFF_NOTE}</p>
@@ -1218,17 +1243,11 @@ export default function UnilagGroupFoodBuying() {
                       <p>If you pick Egusi, choose Eba or Fufu and a protein (Beef, Chicken or Fish).</p>
                       <p>Your total is calculated for you and shown at the bottom.</p>
                     </>
-                  ) : step === 2 ? (
+                  ) : (
                     <>
                       <p>Transfer the exact total shown to the FCMB account.</p>
                       <p>Upload a clear screenshot or photo of your receipt.</p>
                       <p>Also forward the receipt to {WHATSAPP_NUMBER} on WhatsApp.</p>
-                    </>
-                  ) : (
-                    <>
-                      <p>Enter your details exactly as you want them recorded.</p>
-                      <p>Confirm your WhatsApp number is active and correct.</p>
-                      <p>Have your agent code ready before submitting.</p>
                     </>
                   )}
                 </div>
@@ -1238,16 +1257,16 @@ export default function UnilagGroupFoodBuying() {
                 <h3 className="text-xl font-bold text-gray-900">How it works</h3>
                 <div className="mt-6 space-y-4">
                   <div className="flex items-center gap-3 rounded-2xl bg-orange-50 px-4 py-3">
-                    <Sandwich className="h-5 w-5 text-orange-600" />
-                    <span className="font-medium text-gray-700">Choose the next weekday's meals</span>
+                    <User className="h-5 w-5 text-orange-600" />
+                    <span className="font-medium text-gray-700">Fill in your details</span>
                   </div>
                   <div className="flex items-center gap-3 rounded-2xl bg-red-50 px-4 py-3">
-                    <Banknote className="h-5 w-5 text-red-600" />
-                    <span className="font-medium text-gray-700">Pay & upload your receipt</span>
+                    <Sandwich className="h-5 w-5 text-red-600" />
+                    <span className="font-medium text-gray-700">Choose the next weekday's meals</span>
                   </div>
                   <div className="flex items-center gap-3 rounded-2xl bg-green-50 px-4 py-3">
-                    <User className="h-5 w-5 text-green-600" />
-                    <span className="font-medium text-gray-700">Complete your details</span>
+                    <Banknote className="h-5 w-5 text-green-600" />
+                    <span className="font-medium text-gray-700">Pay & upload your receipt</span>
                   </div>
                 </div>
               </div>
