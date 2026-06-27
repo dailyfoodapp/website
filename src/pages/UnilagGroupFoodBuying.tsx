@@ -4,6 +4,7 @@ import {
   ArrowLeft,
   ArrowRight,
   Banknote,
+  Bike,
   Check,
   Clock,
   Copy,
@@ -55,24 +56,22 @@ type Weekday =
   | 'Saturday'
   | 'Sunday'
 
-type MealCategory = 'rice' | 'beans' | 'swallow'
-
 type DailyMealAvailability = {
   foods: string
-  categories: MealCategory[]
+  itemIds: string[]
 }
 
 const dailyMealAvailability: Partial<Record<Weekday, DailyMealAvailability>> = {
-  Monday: { foods: 'Rice and swallow', categories: ['rice', 'swallow'] },
-  Tuesday: { foods: 'Rice and swallow', categories: ['rice', 'swallow'] },
-  Wednesday: { foods: 'Rice and beans', categories: ['rice', 'beans'] },
-  Thursday: { foods: 'Rice and beans', categories: ['rice', 'beans'] },
-  Friday: { foods: 'Swallow and beans', categories: ['swallow', 'beans'] },
+  Monday: { foods: 'Party jollof or beans and potato', itemIds: ['jollof', 'beans-potato'] },
+  Tuesday: { foods: 'Party jollof or beans and potato', itemIds: ['jollof', 'beans-potato'] },
+  Wednesday: { foods: 'Party jollof or beans and bread', itemIds: ['jollof', 'beans-bread'] },
+  Thursday: { foods: 'Party jollof or beans and potato', itemIds: ['jollof', 'beans-potato'] },
+  Friday: { foods: 'Party jollof or beans and bread', itemIds: ['jollof', 'beans-bread'] },
 }
 
 const noMealAvailability: DailyMealAvailability = {
   foods: 'No meals scheduled for the next delivery day',
-  categories: [],
+  itemIds: [],
 }
 
 const nextWeekdayByCurrentDay: Record<Weekday, Weekday> = {
@@ -98,47 +97,77 @@ type MenuItem = {
   id: string
   name: string
   price: number
-  category: MealCategory
-  hasExtras?: boolean
+  hasProtein?: boolean
 }
 
 const menu: MenuItem[] = [
-  { id: 'jollof', name: 'Party Jollof Rice & Egg', price: 1600, category: 'rice' },
-  { id: 'beans-potato', name: 'Beans & Potato', price: 1200, category: 'beans' },
-  { id: 'beans-bread', name: 'Beans & Bread', price: 1400, category: 'beans' },
-  { id: 'egusi', name: 'Egusi', price: 1700, category: 'swallow', hasExtras: true },
+  { id: 'jollof', name: 'Party Jollof Rice', price: 1600, hasProtein: true },
+  { id: 'beans-potato', name: 'Beans & Potato', price: 1200 },
+  { id: 'beans-bread', name: 'Beans & Bread', price: 1400 },
 ]
 
-const swallowOptions = ['Eba', 'Fufu']
-const proteinOptions = ['Beef', 'Chicken', 'Fish']
+type ProteinOption = {
+  id: string
+  label: string
+  extra: number
+}
+
+const jollofProteinOptions: ProteinOption[] = [
+  { id: 'Egg', label: 'Egg', extra: 0 },
+  { id: 'Chicken', label: 'Chicken', extra: 2500 },
+]
+
+const DELIVERY_FEE = 1000
+
+type DeliveryOption = {
+  id: string
+  label: string
+  description: string
+  fee: number
+}
+
+const deliveryOptions: DeliveryOption[] = [
+  {
+    id: 'pickup',
+    label: 'Pickup',
+    description: 'Collect your order yourself at the pickup point.',
+    fee: 0,
+  },
+  {
+    id: 'delivery',
+    label: 'Delivery',
+    description: 'Delivered to you inside school and school hostels only.',
+    fee: DELIVERY_FEE,
+  },
+]
+
 const genderOptions = ['Male', 'Female']
 
 const steps = [
   { id: 1, label: 'Your Details' },
   { id: 2, label: 'Choose Meal' },
-  { id: 3, label: 'Make Payment' },
+  { id: 3, label: 'Delivery' },
+  { id: 4, label: 'Make Payment' },
 ]
 
 type ContributionFormData = {
   email: string
   fullName: string
   meals: string[]
-  egusiSwallow: string
-  egusiProtein: string
+  jollofProtein: string
+  deliveryOption: string
   gender: string
   whatsapp: string
-  agentCode: string
 }
 
 const initialFormData: ContributionFormData = {
   email: '',
   fullName: '',
   meals: [],
-  egusiSwallow: '',
-  egusiProtein: '',
+  jollofProtein: '',
+  deliveryOption: '',
   gender: '',
   whatsapp: '',
-  agentCode: '',
 }
 
 const naira = (amount: number) => `₦${amount.toLocaleString('en-NG')}`
@@ -171,13 +200,12 @@ const profileFromFormData = (data: ContributionFormData) => ({
   fullName: data.fullName,
   gender: data.gender,
   whatsapp: data.whatsapp,
-  agentCode: data.agentCode,
 })
 
 export default function UnilagGroupFoodBuying() {
   const [searchParams, setSearchParams] = useSearchParams()
   const stepParam = Number(searchParams.get('step'))
-  const step = [1, 2, 3].includes(stepParam) ? stepParam : 1
+  const step = [1, 2, 3, 4].includes(stepParam) ? stepParam : 1
 
   const [formData, setFormData] = useState<ContributionFormData>(buildInitialFormData)
   const [proofImage, setProofImage] = useState<string>(
@@ -201,9 +229,9 @@ export default function UnilagGroupFoodBuying() {
   const availableMenu = useMemo(
     () =>
       menu.filter((item) =>
-        deliveryMealAvailability.categories.includes(item.category),
+        deliveryMealAvailability.itemIds.includes(item.id),
       ),
-    [deliveryMealAvailability.categories],
+    [deliveryMealAvailability.itemIds],
   )
   const availableMealIds = useMemo(
     () => new Set(availableMenu.map((item) => item.id)),
@@ -229,8 +257,7 @@ export default function UnilagGroupFoodBuying() {
       return {
         ...current,
         meals,
-        egusiSwallow: meals.includes('egusi') ? current.egusiSwallow : '',
-        egusiProtein: meals.includes('egusi') ? current.egusiProtein : '',
+        jollofProtein: meals.includes('jollof') ? current.jollofProtein : '',
       }
     })
   }, [availableMealIds])
@@ -242,7 +269,7 @@ export default function UnilagGroupFoodBuying() {
     try {
       localStorage.setItem(DRAFT_KEY, JSON.stringify(payload))
     } catch {
-      // The receipt image can push us past the storage quota — keep the text
+      // The receipt image can push us past the storage quota, so keep the text
       // answers at least and drop the image from the persisted draft.
       try {
         localStorage.setItem(
@@ -260,10 +287,22 @@ export default function UnilagGroupFoodBuying() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  const total = formData.meals.reduce(
-    (sum, id) => sum + (menu.find((item) => item.id === id)?.price ?? 0),
-    0,
-  )
+  const jollofProteinExtra = formData.meals.includes('jollof')
+    ? jollofProteinOptions.find((option) => option.id === formData.jollofProtein)
+        ?.extra ?? 0
+    : 0
+
+  const deliveryFee =
+    deliveryOptions.find((option) => option.id === formData.deliveryOption)?.fee ??
+    0
+
+  const total =
+    formData.meals.reduce(
+      (sum, id) => sum + (menu.find((item) => item.id === id)?.price ?? 0),
+      0,
+    ) +
+    jollofProteinExtra +
+    deliveryFee
 
   const handleInputChange =
     (field: keyof ContributionFormData) =>
@@ -283,9 +322,9 @@ export default function UnilagGroupFoodBuying() {
         ? current.meals.filter((meal) => meal !== id)
         : [...current.meals, id]
 
-      // Clear the Egusi extras when Egusi is deselected.
-      if (id === 'egusi' && selected) {
-        return { ...current, meals, egusiSwallow: '', egusiProtein: '' }
+      // Clear the jollof protein choice when jollof is deselected.
+      if (id === 'jollof' && selected) {
+        return { ...current, meals, jollofProtein: '' }
       }
 
       return { ...current, meals }
@@ -374,13 +413,6 @@ export default function UnilagGroupFoodBuying() {
       return false
     }
 
-    if (!formData.agentCode.trim()) {
-      toast.error('Agent code is required', {
-        description: 'Add the agent code before continuing.',
-      })
-      return false
-    }
-
     return true
   }
 
@@ -399,21 +431,23 @@ export default function UnilagGroupFoodBuying() {
       return false
     }
 
-    if (formData.meals.includes('egusi')) {
-      if (!formData.egusiSwallow) {
-        toast.error('Choose your swallow', {
-          description: 'Select either Eba or Fufu for your Egusi.',
-        })
-        return false
-      }
-      if (!formData.egusiProtein) {
-        toast.error('Choose your protein', {
-          description: 'Select a protein to go with your Egusi.',
-        })
-        return false
-      }
+    if (formData.meals.includes('jollof') && !formData.jollofProtein) {
+      toast.error('Choose your protein', {
+        description: 'Select Egg or Chicken for your Party Jollof Rice.',
+      })
+      return false
     }
 
+    return true
+  }
+
+  const validateDelivery = () => {
+    if (!formData.deliveryOption) {
+      toast.error('Choose pickup or delivery', {
+        description: 'Select how you want to receive your order before continuing.',
+      })
+      return false
+    }
     return true
   }
 
@@ -430,6 +464,7 @@ export default function UnilagGroupFoodBuying() {
   const handleNext = () => {
     if (step === 1 && !validateDetails()) return
     if (step === 2 && !validateMeal()) return
+    if (step === 3 && !validateDelivery()) return
     goToStep(step + 1)
   }
 
@@ -447,6 +482,10 @@ export default function UnilagGroupFoodBuying() {
     }
     if (!validateMeal()) {
       goToStep(2)
+      return
+    }
+    if (!validateDelivery()) {
+      goToStep(3)
       return
     }
     if (!validatePayment()) return
@@ -473,7 +512,7 @@ export default function UnilagGroupFoodBuying() {
       localStorage.setItem(PROFILE_KEY, JSON.stringify(profileFromFormData(formData)))
       localStorage.removeItem(DRAFT_KEY)
     } catch {
-      // Ignore storage errors — submission already succeeded.
+      // Ignore storage errors; submission already succeeded.
     }
 
     toast.success('Response sent', {
@@ -496,14 +535,26 @@ export default function UnilagGroupFoodBuying() {
     goToStep(1)
   }
 
-  // The exact strings sent to the Google Form, with Egusi extras inlined.
+  // The exact strings sent to the Google Form, with the jollof protein inlined.
   const mealSubmissionValues = formData.meals.map((id) => {
     const item = menu.find((meal) => meal.id === id)
-    if (id === 'egusi') {
-      return `Egusi (${formData.egusiSwallow || '—'}, ${formData.egusiProtein || '—'})`
+    if (id === 'jollof') {
+      return `Party Jollof Rice (${formData.jollofProtein || 'not selected'})`
     }
     return item?.name ?? id
   })
+
+  const selectedDelivery = deliveryOptions.find(
+    (option) => option.id === formData.deliveryOption,
+  )
+  // The exact choice text the "Delivery option" Google Form question expects.
+  const deliverySubmissionValue = selectedDelivery?.label ?? ''
+  // A friendlier label (with the fee) for the on-screen confirmation summary.
+  const deliveryLabel = selectedDelivery
+    ? `${selectedDelivery.label}${
+        selectedDelivery.fee > 0 ? ` (+${naira(selectedDelivery.fee)})` : ''
+      }`
+    : ''
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-red-50">
@@ -526,7 +577,6 @@ export default function UnilagGroupFoodBuying() {
         <input type="hidden" name="emailAddress" value={formData.email} readOnly />
         <input type="hidden" name="entry.1307790311" value={formData.fullName} readOnly />
         <input type="hidden" name="entry.1434761322" value={formData.whatsapp} readOnly />
-        <input type="hidden" name="entry.205829036" value={formData.agentCode} readOnly />
         <input
           type="hidden"
           name="entry.1441669755"
@@ -536,6 +586,15 @@ export default function UnilagGroupFoodBuying() {
         <input type="hidden" name="entry.2083395468_sentinel" value="" readOnly />
         {formData.gender ? (
           <input type="hidden" name="entry.2083395468" value={formData.gender} readOnly />
+        ) : null}
+        <input type="hidden" name="entry.827509371_sentinel" value="" readOnly />
+        {deliverySubmissionValue ? (
+          <input
+            type="hidden"
+            name="entry.827509371"
+            value={deliverySubmissionValue}
+            readOnly
+          />
         ) : null}
         <input type="hidden" name="fvv" value="1" readOnly />
         <input type="hidden" name="pageHistory" value="0" readOnly />
@@ -558,11 +617,12 @@ export default function UnilagGroupFoodBuying() {
             </div>
 
             <h1 className="mb-4 text-4xl font-bold leading-tight md:text-5xl">
-              Join the group food buying in 3 simple steps
+              Join the group food buying in 4 simple steps
             </h1>
             <p className="mx-auto max-w-3xl text-lg text-white/90 md:text-xl">
-              Fill in your details, choose your meal, then pay and upload your
-              receipt. Your progress is saved automatically as you go.
+              Fill in your details, choose your meal, pick pickup or delivery, then
+              pay and upload your receipt. Your progress is saved automatically as
+              you go.
             </p>
             <div className="mx-auto mt-6 inline-flex max-w-3xl items-center gap-3 rounded-2xl bg-white/15 px-5 py-4 text-left text-sm font-semibold text-white shadow-lg backdrop-blur-sm sm:text-base">
               <Clock className="h-5 w-5 shrink-0" />
@@ -590,7 +650,7 @@ export default function UnilagGroupFoodBuying() {
               <div className="space-y-6 px-6 py-8 sm:px-8">
                 <div className="rounded-2xl border border-green-200 bg-green-50 p-5">
                   <p className="font-bold text-green-900">
-                    One last step — send your receipt on WhatsApp
+                    One last step: send your receipt on WhatsApp
                   </p>
                   <p className="mt-1 text-sm leading-relaxed text-green-800">
                     Your payment is only confirmed once you send your receipt to{' '}
@@ -633,6 +693,14 @@ export default function UnilagGroupFoodBuying() {
                       {mealSubmissionValues.length > 0
                         ? mealSubmissionValues.join(', ')
                         : 'Not provided'}
+                    </p>
+                  </div>
+                  <div className="rounded-2xl border border-gray-100 bg-gray-50 p-5">
+                    <p className="text-sm font-semibold uppercase tracking-wide text-gray-500">
+                      Order Type
+                    </p>
+                    <p className="mt-2 text-lg font-semibold text-gray-900">
+                      {deliveryLabel || 'Not provided'}
                     </p>
                   </div>
                   <div className="rounded-2xl border border-gray-100 bg-gray-50 p-5">
@@ -711,18 +779,26 @@ export default function UnilagGroupFoodBuying() {
               </div>
 
               <div className="px-5 py-8 sm:px-8">
-                {/* STEP 2 — Choose meal */}
+                <div className="mb-6 flex items-start gap-2.5 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+                  <Info className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />
+                  <span>
+                    Nothing is submitted yet. Your answers are only recorded once
+                    you complete all {steps.length} steps and tap submit on the last
+                    one.
+                  </span>
+                </div>
+
+                {/* STEP 2: Choose meal */}
                 {step === 2 ? (
                   <div className="space-y-8">
                     <div>
                       <h2 className="text-2xl font-bold text-gray-900">
-                        Step 2 — Select your food
+                        Step 2: Select your food
                       </h2>
                       <p className="mt-2 text-gray-600">
                         Today is {currentWeekday}, so ordering is open for{' '}
-                        {deliveryWeekday}. Tap one or more meals for that delivery
-                        day. The total updates automatically and you will pay it in
-                        the next step.
+                        {deliveryWeekday}. Tap one or more meals for that day. The
+                        total updates automatically as you go.
                       </p>
                     </div>
 
@@ -758,8 +834,8 @@ export default function UnilagGroupFoodBuying() {
                                 </span>
                                 <span className="text-sm text-gray-500">
                                   {naira(item.price)}
-                                  {item.hasExtras
-                                    ? ' · comes with a swallow & protein'
+                                  {item.hasProtein
+                                    ? ' · choose Egg (included) or Chicken (+₦2,500)'
                                     : ''}
                                 </span>
                               </span>
@@ -774,69 +850,41 @@ export default function UnilagGroupFoodBuying() {
                               </span>
                             </button>
 
-                            {/* Egusi extras */}
-                            {item.id === 'egusi' && selected ? (
-                              <div className="mt-3 space-y-5 rounded-2xl border border-orange-100 bg-orange-50/50 p-4 sm:p-5">
-                                <div className="space-y-3">
-                                  <Label className="text-sm font-semibold text-gray-800">
-                                    Choose your swallow{' '}
-                                    <span className="text-red-500">*</span>
-                                  </Label>
-                                  <div className="grid grid-cols-2 gap-3">
-                                    {swallowOptions.map((option) => {
-                                      const active = formData.egusiSwallow === option
-                                      return (
-                                        <button
-                                          key={option}
-                                          type="button"
-                                          onClick={() =>
-                                            setFormData((current) => ({
-                                              ...current,
-                                              egusiSwallow: option,
-                                            }))
-                                          }
-                                          className={`rounded-xl border px-2 py-3 text-sm font-medium transition-all sm:px-4 ${
-                                            active
-                                              ? 'border-orange-500 bg-white text-orange-700 shadow-sm'
-                                              : 'border-gray-200 bg-white text-gray-700 hover:border-orange-200'
-                                          }`}
-                                        >
-                                          {option}
-                                        </button>
-                                      )
-                                    })}
-                                  </div>
-                                </div>
-
-                                <div className="space-y-3">
-                                  <Label className="text-sm font-semibold text-gray-800">
-                                    Choose your protein{' '}
-                                    <span className="text-red-500">*</span>
-                                  </Label>
-                                  <div className="grid grid-cols-3 gap-3">
-                                    {proteinOptions.map((option) => {
-                                      const active = formData.egusiProtein === option
-                                      return (
-                                        <button
-                                          key={option}
-                                          type="button"
-                                          onClick={() =>
-                                            setFormData((current) => ({
-                                              ...current,
-                                              egusiProtein: option,
-                                            }))
-                                          }
-                                          className={`rounded-xl border px-2 py-3 text-sm font-medium transition-all sm:px-4 ${
-                                            active
-                                              ? 'border-orange-500 bg-white text-orange-700 shadow-sm'
-                                              : 'border-gray-200 bg-white text-gray-700 hover:border-orange-200'
-                                          }`}
-                                        >
-                                          {option}
-                                        </button>
-                                      )
-                                    })}
-                                  </div>
+                            {/* Jollof protein choice */}
+                            {item.id === 'jollof' && selected ? (
+                              <div className="mt-3 space-y-3 rounded-2xl border border-orange-100 bg-orange-50/50 p-4 sm:p-5">
+                                <Label className="text-sm font-semibold text-gray-800">
+                                  Choose your protein{' '}
+                                  <span className="text-red-500">*</span>
+                                </Label>
+                                <div className="grid grid-cols-2 gap-3">
+                                  {jollofProteinOptions.map((option) => {
+                                    const active = formData.jollofProtein === option.id
+                                    return (
+                                      <button
+                                        key={option.id}
+                                        type="button"
+                                        onClick={() =>
+                                          setFormData((current) => ({
+                                            ...current,
+                                            jollofProtein: option.id,
+                                          }))
+                                        }
+                                        className={`flex flex-col items-start gap-0.5 rounded-xl border px-3 py-3 text-sm font-medium transition-all sm:px-4 ${
+                                          active
+                                            ? 'border-orange-500 bg-white text-orange-700 shadow-sm'
+                                            : 'border-gray-200 bg-white text-gray-700 hover:border-orange-200'
+                                        }`}
+                                      >
+                                        <span>{option.label}</span>
+                                        <span className="text-xs font-normal text-gray-500">
+                                          {option.extra > 0
+                                            ? `+${naira(option.extra)}`
+                                            : 'Included'}
+                                        </span>
+                                      </button>
+                                    )
+                                  })}
                                 </div>
                               </div>
                             ) : null}
@@ -862,7 +910,7 @@ export default function UnilagGroupFoodBuying() {
                         <span className="inline-flex items-center gap-2">
                           {availableMenu.length === 0
                             ? 'No meals available'
-                            : 'Continue to payment'}
+                            : 'Continue to delivery'}
                           {availableMenu.length > 0 ? (
                             <ArrowRight className="h-5 w-5" />
                           ) : null}
@@ -880,12 +928,107 @@ export default function UnilagGroupFoodBuying() {
                   </div>
                 ) : null}
 
-                {/* STEP 3 — Make payment */}
+                {/* STEP 3: Pickup or delivery */}
                 {step === 3 ? (
                   <div className="space-y-8">
                     <div>
                       <h2 className="text-2xl font-bold text-gray-900">
-                        Step 3 — Make payment & upload proof
+                        Step 3: Pickup or delivery
+                      </h2>
+                      <p className="mt-2 text-gray-600">
+                        Choose how you want to receive your order. Delivery adds{' '}
+                        {naira(DELIVERY_FEE)} and is only available inside school and
+                        school hostels. Your total updates automatically.
+                      </p>
+                    </div>
+
+                    <div className="grid gap-3">
+                      {deliveryOptions.map((option) => {
+                        const selected = formData.deliveryOption === option.id
+
+                        return (
+                          <button
+                            key={option.id}
+                            type="button"
+                            onClick={() =>
+                              setFormData((current) => ({
+                                ...current,
+                                deliveryOption: option.id,
+                              }))
+                            }
+                            className={`flex w-full items-start justify-between gap-4 rounded-2xl border px-5 py-4 text-left transition-all ${
+                              selected
+                                ? 'border-orange-500 bg-orange-50 shadow-sm'
+                                : 'border-gray-200 bg-white hover:border-orange-200 hover:bg-orange-50/40'
+                            }`}
+                          >
+                            <span className="flex flex-col">
+                              <span className="font-semibold text-gray-800">
+                                {option.label}
+                                {option.fee > 0 ? (
+                                  <span className="ml-2 text-sm font-semibold text-orange-600">
+                                    +{naira(option.fee)}
+                                  </span>
+                                ) : (
+                                  <span className="ml-2 text-sm font-medium text-gray-400">
+                                    Free
+                                  </span>
+                                )}
+                              </span>
+                              <span className="mt-1 text-sm text-gray-500">
+                                {option.description}
+                              </span>
+                            </span>
+                            <span
+                              className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border ${
+                                selected
+                                  ? 'border-orange-500 bg-orange-500 text-white'
+                                  : 'border-gray-300 bg-white text-transparent'
+                              }`}
+                            >
+                              <Check className="h-4 w-4" />
+                            </span>
+                          </button>
+                        )
+                      })}
+                    </div>
+
+                    <div className="flex items-center justify-between rounded-2xl bg-gray-900 px-6 py-5 text-white">
+                      <span className="text-sm font-medium text-gray-300">
+                        Total to pay
+                      </span>
+                      <span className="text-2xl font-bold">{naira(total)}</span>
+                    </div>
+
+                    <div className="flex flex-col gap-3 sm:flex-row-reverse sm:items-center sm:justify-between">
+                      <Button
+                        type="button"
+                        onClick={handleNext}
+                        className="h-14 w-full rounded-full bg-gradient-to-r from-orange-500 via-red-500 to-yellow-500 text-base font-bold text-white shadow-lg transition-all duration-300 hover:scale-[1.01] hover:from-orange-600 hover:via-red-600 hover:to-yellow-600 sm:w-auto sm:px-10"
+                      >
+                        <span className="inline-flex items-center gap-2">
+                          Continue to payment
+                          <ArrowRight className="h-5 w-5" />
+                        </span>
+                      </Button>
+                      <button
+                        type="button"
+                        onClick={() => goToStep(2)}
+                        className="inline-flex h-14 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-6 text-base font-semibold text-gray-700 transition-colors hover:border-gray-300"
+                      >
+                        <ArrowLeft className="h-4 w-4" />
+                        Back
+                      </button>
+                    </div>
+                  </div>
+                ) : null}
+
+                {/* STEP 4: Make payment */}
+                {step === 4 ? (
+                  <div className="space-y-8">
+                    <div>
+                      <h2 className="text-2xl font-bold text-gray-900">
+                        Step 4: Make payment & upload proof
                       </h2>
                       <p className="mt-2 text-gray-600">
                         Transfer the exact total to the account below, then upload a
@@ -1007,7 +1150,7 @@ export default function UnilagGroupFoodBuying() {
                               Important: you must send your receipt on WhatsApp
                             </p>
                             <p className="mt-1 text-sm leading-relaxed text-green-800">
-                              Uploading here is not enough — your payment is only
+                              Uploading here is not enough. Your payment is only
                               confirmed once you send the receipt to{' '}
                               <span className="font-semibold">{WHATSAPP_NUMBER}</span> on
                               WhatsApp. Tap the button below, then attach your receipt in
@@ -1045,7 +1188,7 @@ export default function UnilagGroupFoodBuying() {
                       </Button>
                       <button
                         type="button"
-                        onClick={() => goToStep(2)}
+                        onClick={() => goToStep(3)}
                         className="inline-flex h-14 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-6 text-base font-semibold text-gray-700 transition-colors hover:border-gray-300"
                       >
                         <ArrowLeft className="h-4 w-4" />
@@ -1055,12 +1198,12 @@ export default function UnilagGroupFoodBuying() {
                   </div>
                 ) : null}
 
-                {/* STEP 1 — Your details */}
+                {/* STEP 1: Your details */}
                 {step === 1 ? (
                   <form onSubmit={handleDetailsSubmit} className="space-y-8">
                     <div>
                       <h2 className="text-2xl font-bold text-gray-900">
-                        Step 1 — Your details
+                        Step 1: Your details
                       </h2>
                       <p className="mt-2 text-gray-600">
                         Fill in your details exactly as you want them recorded.
@@ -1165,27 +1308,6 @@ export default function UnilagGroupFoodBuying() {
                       />
                     </div>
 
-                    <div className="space-y-3">
-                      <Label htmlFor="agentCode" className="text-base font-semibold text-gray-800">
-                        Agent Code <span className="text-red-500">*</span>
-                      </Label>
-                      <Input
-                        id="agentCode"
-                        type="text"
-                        required
-                        value={formData.agentCode}
-                        onChange={handleInputChange('agentCode')}
-                        placeholder="Enter your referral code"
-                        className="h-13 rounded-2xl border-orange-100 focus-visible:ring-orange-400"
-                      />
-                      <p className="text-sm leading-relaxed text-gray-500">
-                        You must be referred by an agent. If you do not have a code yet,
-                        contact{' '}
-                        <span className="font-semibold text-gray-700">{WHATSAPP_NUMBER}</span>{' '}
-                        on WhatsApp for an agent code near you.
-                      </p>
-                    </div>
-
                     <div className="flex flex-col gap-3 sm:flex-row-reverse">
                       <Button
                         type="submit"
@@ -1209,6 +1331,8 @@ export default function UnilagGroupFoodBuying() {
                     <UserRound className="h-7 w-7" />
                   ) : step === 2 ? (
                     <Utensils className="h-7 w-7" />
+                  ) : step === 3 ? (
+                    <Bike className="h-7 w-7" />
                   ) : (
                     <Banknote className="h-7 w-7" />
                   )}
@@ -1218,14 +1342,16 @@ export default function UnilagGroupFoodBuying() {
                     ? 'Step 1 · Your details'
                     : step === 2
                       ? 'Step 2 · Pick your meal'
-                      : 'Step 3 · Pay & upload'}
+                      : step === 3
+                        ? 'Step 3 · Pickup or delivery'
+                        : 'Step 4 · Pay & upload'}
                 </h3>
                 <div className="mt-6 space-y-4 text-sm leading-relaxed text-gray-200">
                   {step === 1 ? (
                     <>
                       <p>Enter your details exactly as you want them recorded.</p>
                       <p>Confirm your WhatsApp number is active and correct.</p>
-                      <p>Have your agent code ready before continuing.</p>
+                      <p>Double-check your email so we can reach you.</p>
                     </>
                   ) : step === 2 ? (
                     <>
@@ -1240,8 +1366,15 @@ export default function UnilagGroupFoodBuying() {
                       ) : (
                         <p>No meals are scheduled for {deliveryWeekday}.</p>
                       )}
-                      <p>If you pick Egusi, choose Eba or Fufu and a protein (Beef, Chicken or Fish).</p>
+                      <p>If you pick Party Jollof Rice, choose Egg (included) or Chicken (+₦2,500).</p>
                       <p>Your total is calculated for you and shown at the bottom.</p>
+                    </>
+                  ) : step === 3 ? (
+                    <>
+                      <p>Choose pickup or delivery for your order.</p>
+                      <p>Delivery costs an extra {naira(DELIVERY_FEE)}.</p>
+                      <p>Delivery is only available inside school and school hostels.</p>
+                      <p>Your total updates the moment you choose.</p>
                     </>
                   ) : (
                     <>
@@ -1263,6 +1396,10 @@ export default function UnilagGroupFoodBuying() {
                   <div className="flex items-center gap-3 rounded-2xl bg-red-50 px-4 py-3">
                     <Sandwich className="h-5 w-5 text-red-600" />
                     <span className="font-medium text-gray-700">Choose the next weekday's meals</span>
+                  </div>
+                  <div className="flex items-center gap-3 rounded-2xl bg-yellow-50 px-4 py-3">
+                    <Bike className="h-5 w-5 text-yellow-600" />
+                    <span className="font-medium text-gray-700">Pick pickup or delivery</span>
                   </div>
                   <div className="flex items-center gap-3 rounded-2xl bg-green-50 px-4 py-3">
                     <Banknote className="h-5 w-5 text-green-600" />
