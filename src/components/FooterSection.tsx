@@ -160,7 +160,7 @@ const FooterSection = () => {
           <p className="text-sm text-center text-gray-400">
             Owned by{' '}
             <span className="text-orange-400 font-semibold">
-              Macrade Digital Services Ltd
+              DailyfoodApp LTD
             </span>
           </p>
         </div>
