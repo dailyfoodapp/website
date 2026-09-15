@@ -125,6 +125,13 @@ const FooterSection = () => {
         <div className="mt-16 border-t border-gray-800 pt-8">
           <div className="flex flex-wrap justify-center gap-6 mb-6 text-sm">
             <Link
+              to="/blog"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="!text-gray-400 hover:text-white transition-colors"
+            >
+              Blog
+            </Link>
+            <Link
               to="/legal"
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               className="!text-gray-400 hover:text-white transition-colors"

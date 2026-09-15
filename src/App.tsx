@@ -8,6 +8,8 @@ import Contact from './pages/Contact'
 import DeleteAccount from './pages/DeleteAccount'
 import NotFound from './pages/NotFound'
 import UnilagGroupFoodBuying from './pages/UnilagGroupFoodBuying'
+import Blog from './pages/Blog'
+import BlogPostPage from './pages/BlogPost'
 
 const App = () => (
   <TooltipProvider>
@@ -15,6 +17,8 @@ const App = () => (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Index />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:slug" element={<BlogPostPage />} />
         <Route path="/legal" element={<Legal />} />
         <Route path="/help" element={<Help />} />
         <Route path="/contact" element={<Contact />} />

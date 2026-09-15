@@ -20,13 +20,20 @@ export default function PageHeader() {
           </Link>
 
           {/* Navigation Links */}
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center justify-end gap-3 sm:gap-5 lg:gap-6">
             <Link
               to="/"
               onClick={handleNavClick}
               className="!text-gray-700 hover:text-orange-600 font-medium text-sm md:text-base transition-colors"
             >
               Home
+            </Link>
+            <Link
+              to="/blog"
+              onClick={handleNavClick}
+              className="!text-gray-700 hover:text-orange-600 font-medium text-sm md:text-base transition-colors"
+            >
+              Blog
             </Link>
             <Link
               to="/help"
