@@ -230,10 +230,18 @@ body {
 
 .blog-article-content img {
   margin-top: 2rem;
-  width: 100%;
+  max-width: 100%;
   max-height: 520px;
   border-radius: 0.75rem;
   object-fit: cover;
+}
+
+.blog-article-content img:not([width]) {
+  width: 100%;
+}
+
+.blog-article-content img[width] {
+  height: auto;
 }
 
 .blog-article-content pre {
