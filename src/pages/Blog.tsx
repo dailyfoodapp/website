@@ -7,11 +7,7 @@ import FooterSection from '@/components/FooterSection'
 import PageHeader from '@/components/PageHeader'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import {
-  getErrorMessage,
-  listPublishedBlogPosts,
-  type BlogPost,
-} from '@/lib/blog'
+import { listPublishedBlogPosts, type BlogPost } from '@/lib/blog'
 import { SITE_URL, useSeo } from '@/lib/seo'
 
 export default function Blog() {
@@ -19,13 +15,11 @@ export default function Blog() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState('')
 
   useEffect(() => {
     const controller = new AbortController()
 
     setIsLoading(true)
-    setError('')
 
     listPublishedBlogPosts({ signal: controller.signal })
       .then((nextPosts) => {
@@ -33,15 +27,9 @@ export default function Blog() {
           setPosts(nextPosts)
         }
       })
-      .catch((requestError: unknown) => {
+      .catch(() => {
         if (!controller.signal.aborted) {
-          const message = getErrorMessage(requestError)
-
-          if (message.includes('status 404')) {
-            setPosts([])
-          } else {
-            setError(message)
-          }
+          setPosts([])
         }
       })
       .finally(() => {
@@ -162,12 +150,6 @@ export default function Blog() {
             ))}
           </div>
         </section>
-
-        {error ? (
-          <div className="mb-8 rounded-lg border border-red-200 bg-red-50 px-5 py-4 text-sm font-medium text-red-800">
-            {error}
-          </div>
-        ) : null}
 
         {isLoading ? (
           <div className="grid gap-6 md:grid-cols-3">
