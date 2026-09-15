@@ -105,7 +105,7 @@ export default function BlogPostPage() {
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-red-50">
       <PageHeader />
 
-      <main className="container mx-auto max-w-4xl px-4 py-10 md:py-14">
+      <main className="container mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
         <Link
           to="/blog"
           className="mb-8 inline-flex items-center gap-2 text-sm font-bold !text-orange-600 hover:!text-orange-700"
@@ -148,7 +148,7 @@ export default function BlogPostPage() {
               />
             ) : null}
 
-            <div className="px-6 py-8 md:px-10 md:py-12">
+            <div className="mx-auto max-w-5xl px-6 py-8 md:px-10 md:py-12">
               <div className="mb-5 flex flex-wrap items-center gap-3 text-sm text-gray-500">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-orange-50 px-3 py-1 font-semibold text-orange-700">
                   <Tag className="h-3.5 w-3.5" />

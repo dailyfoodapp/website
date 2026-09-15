@@ -103,7 +103,7 @@ export default function Blog() {
       <PageHeader />
 
       <section className="bg-gradient-to-r from-orange-500 to-red-500 py-14 text-white md:py-20">
-        <div className="container mx-auto max-w-6xl px-4">
+        <div className="container mx-auto max-w-7xl px-4">
           <div className="max-w-3xl">
             <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-semibold">
               <Sparkles className="h-4 w-4" />
@@ -120,7 +120,7 @@ export default function Blog() {
         </div>
       </section>
 
-      <main className="container mx-auto max-w-6xl px-4 py-12 md:py-16">
+      <main className="container mx-auto max-w-7xl px-4 py-12 md:py-16">
         <section className="mb-10 flex flex-col gap-4 rounded-xl border border-orange-100 bg-white p-4 shadow-sm md:flex-row md:items-center md:justify-between">
           <div className="relative w-full md:max-w-md">
             <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-orange-500" />
